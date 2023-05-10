@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <NavBar/>
-    <MainComponent/>
+    <NavBarUser />
+    <AboutComponent />
   </div>
 </template>
 
 <script lang="ts" setup>
-import NavBar from './NavBar.vue'
-import MainComponent from './MainComponent.vue';
+import NavBarUser from './NavBarUser.vue';
+import AboutComponent from './AboutComponent.vue';
 </script>
 
 <style lang="scss" scoped>

@@ -22,13 +22,35 @@
         <img src="../assets/shopping_cart.svg" alt="Carro de compra">
       </button>
       <button>
-        <img src="../assets/menu.svg" alt="Menu">
+        <img src="../assets/menu.svg" alt="Menu" @click="menu = !menu">
       </button>
     </div>
   </header>
+  <div class="containmodal" v-show="menu" >
+    <div class="contain">
+      <div class="salir">
+        <button @click="menu = !menu">
+          <img src="../assets/close.svg" alt="Cerrar">
+        </button>
+      </div>
+      <div class="opciones">
+        <h2>Menu</h2>
+        <p href="#">Mi Cuenta</p>
+        <p href="#" @click="acerca">Acerca de nosotros</p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
+import { ref, type Ref } from "vue";
+import { useRouter } from "vue-router";
+const menu: Ref<boolean> = ref(false);
+const router = useRouter();
+const acerca = () => {
+  router.push("/about");
+};
+
 </script>
 
 <style lang="scss" scoped>
@@ -120,6 +142,60 @@
       img {
         width: 100%;
         height: 100%;
+      }
+    }
+  }
+}
+
+.containmodal {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: right;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  transition: all 5000ms ease;
+
+  .contain {
+    width: 15%;
+    height: 100%;
+    background-color: #1c1c1c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+
+
+    .opciones {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h2 {
+        margin-bottom: 0px;
+      }
+
+      p {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        cursor: pointer;
+      }
+    }
+
+    .salir {
+      width: 50px;
+      height: 50px;
+      button {
+        border: none;
+        outline: none;
+        cursor: pointer;
+        margin-top: 10px;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }

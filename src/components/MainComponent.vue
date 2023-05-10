@@ -77,9 +77,7 @@
           </div>
           <p>Para Guardar tus deliciosas Galletas</p>
         </div>
-
       </div>
-
     </div>
   </main>
 </template>
@@ -309,7 +307,7 @@ const num: Ref<number> = ref(20000)
 
         p {
           margin-bottom: 0px;
-          
+
         }
 
       }
