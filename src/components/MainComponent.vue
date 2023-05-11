@@ -89,11 +89,48 @@ const num: Ref<number> = ref(20000)
 
 <style lang="scss" scoped>
 
-@media only screen and (max-width: 600px) {
-      .main {
-        background-color: black; /* Aplicará solo desde 0 hasta 600px */
-      }
-    }
+@media only screen and (max-width: 1570px) {
+  .mainleft {
+    margin-right: 40px;
+  }
+}
+
+
+@media only screen and (max-width: 1482px) {
+  .mainleft {
+    margin-right: 80px;
+  }
+}
+
+@media only screen and (max-width: 1380px) {
+  .mainleft {
+    margin-right: 120px;
+  }
+}
+
+
+@media only screen and (max-width: 1300px) {
+  .mainleft {
+    margin-right: 140px;
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .mainleft {
+    margin-right: 160px;
+  }
+}
+
+
+@media only screen and (max-width: 1200px) {
+  .mainleftleft {
+    display: none;
+  }
+
+  .mainright {
+    margin-right: 60px;
+  }
+}
 
 .main {
   margin-top: 50px;
@@ -101,7 +138,8 @@ const num: Ref<number> = ref(20000)
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  position: fixed;
 
   .mainleft {
     display: flex;
@@ -111,8 +149,6 @@ const num: Ref<number> = ref(20000)
     height: 100%;
 
     .mainleftleft {
-      display: flex;
-      flex-direction: column;
       background-color: white;
       border: thin solid black;
       width: 75%;

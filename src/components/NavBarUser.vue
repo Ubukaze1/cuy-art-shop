@@ -42,6 +42,5 @@ const home = () => {
       height: 100%;
     }
   }
-
 }
 </style>
