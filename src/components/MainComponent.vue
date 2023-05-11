@@ -88,10 +88,17 @@ const num: Ref<number> = ref(20000)
 </script>
 
 <style lang="scss" scoped>
+
+@media only screen and (max-width: 600px) {
+      .main {
+        background-color: black; /* Aplicará solo desde 0 hasta 600px */
+      }
+    }
+
 .main {
   margin-top: 50px;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
