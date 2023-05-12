@@ -5,12 +5,34 @@
         <h1>Mi Cuenta</h1>
         <div class="linea1"></div>
         <div class="list">
-          <div class="linea2"></div>
-          <label @click="ver = !ver">Actualizar Informacion</label>
+          <div>
+            <div class="linea2" :class="!ver ? 'rot' : ''"></div>
+            <div class="lineaa2" v-show="!ver"></div>
+          </div>
+          <label @click="cent">Actualizar Informacion</label>
         </div>
         <div class="list1">
-          <div class="linea3"></div>
-          <label>Vendedora</label>
+          <div>
+            <div class="linea3" :class="opc ? 'rot' : ''"></div>
+            <div class="lineaa3" v-show="opc"></div>
+          </div>
+          <label @click="centopc">Vendedora</label>
+        </div>
+        <div class="opc">
+          <div class="list3">
+            <div>
+              <div class="linea4" v-show="opc" :class="opcselc ? 'rot' : ''"></div>
+              <div class="lineaa4" v-show="opcselc"></div>
+            </div>
+            <label @click="centopc22" v-show="opc">Añadir Producto</label>
+          </div>
+          <div class="list4">
+            <div>
+              <div class="linea5" v-show="opc" :class="opcselc1 ? 'rot' : ''"></div>
+              <div class="lineaa5" v-show="opcselc1"></div>
+            </div>
+            <label v-show="opc" @click="centopc11">Actualizar Producto</label>
+          </div>
         </div>
         <div class="linea"></div>
         <img class="logo" src="../../assets/Logo.jpeg" alt="El logo">
@@ -33,6 +55,56 @@ import MiCuentaActualizar from './MiCuentaActualizar.vue';
 
 const ver: Ref<boolean> = ref(true)
 
+const cent = () => {
+  if (opc.value = false) {
+    ver.value = !ver.value
+  } else {
+    opc.value = false
+    ver.value = !ver.value
+  }
+}
+
+const centopc = () => {
+  if (ver.value = true) {
+    opc.value = !opc.value
+  } else {
+    ver.value = true
+    opc.value = !opc.value
+  }
+
+  if (opc.value = false) {
+    opcselc.value = false
+    opcselc1.value = false
+  }
+
+
+  if (opc.value = true) {
+    opcselc.value = false
+    opcselc1.value = false
+  }
+}
+
+const centopc11 = () => {
+  if (opcselc.value = false) {
+    opcselc1.value = !opcselc1.value
+  } else {
+    opcselc.value = false 
+    opcselc1.value = !opcselc1.value
+  }
+}
+
+const centopc22 = () => {
+  if (opcselc1.value = false) {
+    opcselc.value = !opcselc.value
+  } else {
+    opcselc1.value = false 
+    opcselc.value = !opcselc.value
+  }
+}
+
+const opc: Ref<boolean> = ref(false)
+const opcselc: Ref<boolean> = ref(false)
+const opcselc1: Ref<boolean> = ref(false)
 
 </script>
 
@@ -94,6 +166,20 @@ const ver: Ref<boolean> = ref(true)
           margin-right: 10px;
         }
 
+        .rot {
+          position: relative;
+          bottom: 4px;
+          transform: rotate(15deg);
+        }
+
+        .lineaa2 {
+          width: 25px;
+          height: 2px;
+          background-color: black;
+          margin-right: 10px;
+          position: relative;
+          transform: rotate(-15deg);
+        }
 
         label {
           font-weight: bold;
@@ -115,15 +201,110 @@ const ver: Ref<boolean> = ref(true)
           margin-right: 10px;
         }
 
+        .rot {
+          position: relative;
+          bottom: 4px;
+          transform: rotate(15deg);
+        }
+
+        .lineaa3 {
+          width: 25px;
+          height: 2px;
+          background-color: black;
+          margin-right: 10px;
+          position: relative;
+          transform: rotate(-15deg);
+        }
+
         label {
           margin-right: 85px;
           font-weight: bold;
           cursor: pointer;
         }
 
-        margin-bottom: 280px;
 
       }
+
+      .opc {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 15px;
+
+        .list3 {
+          display: flex;
+          align-items: center;
+          justify-content: left;
+
+          .linea4 {
+            width: 25px;
+            height: 2px;
+            background-color: black;
+            margin-right: 10px;
+          }
+
+          .rot {
+            position: relative;
+            bottom: 4px;
+            transform: rotate(15deg);
+          }
+
+
+          .lineaa4 {
+            width: 25px;
+            height: 2px;
+            background-color: black;
+            margin-right: 10px;
+            position: relative;
+            transform: rotate(-15deg);
+          }
+
+          label {
+            cursor: pointer;
+          }
+
+
+        }
+
+        .list4 {
+          display: flex;
+          align-items: center;
+          justify-content: left;
+          margin-top: 10px;
+
+          .linea5 {
+            width: 25px;
+            height: 2px;
+            background-color: black;
+            margin-right: 10px;
+          }
+
+          .rot {
+            position: relative;
+            bottom: 4px;
+            transform: rotate(15deg);
+          }
+
+
+          .lineaa5 {
+            width: 25px;
+            height: 2px;
+            background-color: black;
+            margin-right: 10px;
+            position: relative;
+            transform: rotate(-15deg);
+          }
+
+          label {
+            cursor: pointer;
+          }
+
+
+        }
+
+        margin-bottom: 280px;
+      }
+
 
       .logo {
         margin-top: 10px;
