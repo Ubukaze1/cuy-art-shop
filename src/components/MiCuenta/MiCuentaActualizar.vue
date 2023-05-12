@@ -9,28 +9,62 @@
     </div>
     <div class="in">
       <label for="">Nombre de Usuario</label>
-      <input type="text" name="usuario" id="usuario" placeholder="Hugo Ricardo">
+      <input type="text" name="usuario" id="usuario" v-model="usuario">
     </div>
     <div class="in">
       <label for="">Correo</label>
-      <input type="text" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con">
+      <input type="text" name="usuario" id="usuario" v-model="correo">
+    </div>
+    <div class="in">
+      <label for="">Contraseña</label>
+      <input type="password" name="usuario" id="usuario" v-model="pass">
     </div>
     <div class="in">
       <label for="">Telèfono</label>
-      <input type="text" name="usuario" id="usuario">
+      <input type="text" name="usuario" id="usuario" v-model="telefono">
     </div>
     <div class="in">
       <label for="">Direcciòn</label>
-      <input type="text" name="usuario" id="usuario">
+      <input type="text" name="usuario" id="usuario" v-model="direcciòn">
     </div>
     <div class="actu">
-      <button class="bt-act">Actualizar</button>
+      <button class="bt-act" @click="aa">Actualizar</button>
       <button class="bt-can">Cancelar</button>
     </div>
   </main>
 </template>
 
 <script lang="ts" setup>
+import { type Ref, ref } from 'vue'
+import { getAuth, updateCurrentUser, type Auth} from 'firebase/auth'
+
+const user = getAuth().currentUser
+
+const usuario: Ref<string> = ref("")
+const correo: Ref<string> = ref("")
+const pass: Ref<string> = ref("")
+const telefono: Ref<string> = ref("")
+const direcciòn: Ref<string> = ref("")
+
+usuario.value = user?.displayName?.toString() || ''
+correo.value = user?.email?.toString() || ''
+pass.value = user?.photoURL?.toString() || ''
+
+const aa = () => {
+if (getAuth().currentUser != null) {
+  console.log("Amigo mio")
+  console.log(getAuth().currentUser)
+  console.log(getAuth().currentUser?.displayName?.toString())
+  console.log(getAuth().currentUser?.email?.toString())
+} else{
+  console.log("Nada")
+}
+}
+
+
+
+
+
 </script>
 
 <style lang="scss" scoped>

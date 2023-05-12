@@ -9,24 +9,39 @@
     </div>
     <div class="in">
       <label for="">Nombre de Usuario</label>
-      <input type="text" name="usuario" id="usuario" placeholder="Hugo Ricardo">
+      <input type="text" name="usuario" id="usuario" placeholder="Hugo Ricardo" disabled v-model="usuario">
     </div>
     <div class="in">
       <label for="">Correo</label>
-      <input type="text" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con">
+      <input type="text" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con" disabled v-model="correo">
     </div>
     <div class="in">
       <label for="">Telèfono</label>
-      <input type="text" name="usuario" id="usuario">
+      <input type="text" name="usuario" id="usuario" disabled v-model="telefo">
     </div>
     <div class="in">
       <label for="">Direcciòn</label>
-      <input type="text" name="usuario" id="usuario">
+      <input type="text" name="usuario" id="usuario" disabled v-model="direc">
     </div>
   </main>
 </template>
 
 <script lang="ts" setup>
+import {getAuth} from 'firebase/auth'
+import {type Ref, ref} from 'vue'
+
+const user = getAuth().currentUser
+
+const usuario: Ref<string> = ref('')
+const correo: Ref<string> = ref('')
+const telefo: Ref<string> = ref('')
+const direc: Ref<string> = ref('')
+
+usuario.value = user?.displayName?.toString() || ''
+correo.value = user?.email?.toString() || ''
+
+
+
 </script>
 
 <style lang="scss" scoped>

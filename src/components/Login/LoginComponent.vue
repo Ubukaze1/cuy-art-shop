@@ -46,6 +46,7 @@ const authuser = () => {
   const auth = getAuth()
   signInWithEmailAndPassword(auth, usuario.value, contraseña.value)
     .then((userCredential) => {
+      const user = userCredential.user
       alert("Bienvenido")
     })
     .then(() => {

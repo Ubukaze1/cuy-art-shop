@@ -9,21 +9,21 @@
     </div>
     <div class="in">
       <label for="">Nombre Usuario</label>
-      <input type="text" name="usuario" id="usuario" placeholder="Hugo Ricardo">
+      <input type="text" name="usuario" id="usuario" placeholder="Hugo Ricardo" v-model="usuario" required>
     </div>
     <div class="in">
       <label for="">Correo</label>
-      <input type="text" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con">
+      <input type="email" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con" v-model="correo" required>
     </div>
     <div class="in">
       <label for="">Contraseña</label>
-      <input type="password" name="pass" id="pass" placeholder="Contraseña">
+      <input type="password" name="pass" id="pass" placeholder="Contraseña" v-model="pass" required>
     </div>
     <div class="in">
       <label for="">Repite Contraseña</label>
-      <input type="password" name="pass" id="pass" placeholder="Contraseña">
+      <input type="password" name="pass" id="pass" placeholder="Contraseña" v-model="passaut" required>
     </div>
-    <button>Registrate</button>
+    <button @click="regi">Registrate</button>
     <div class="goface">
       <img src="../../assets/gmail.png" alt="Google">
       <img src="../../assets/facebook.png" alt="Facebook">
@@ -39,11 +39,40 @@
 
 <script lang="ts" setup>
 import { useRouter } from "vue-router"
+import { type Ref, ref } from 'vue'
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+
+const usuario: Ref<string> = ref("")
+const pass: Ref<string> = ref("")
+const correo: Ref<string> = ref("")
+const passaut: Ref<string> = ref("")
 
 const router = useRouter()
 
 const login = () => {
   router.push("/login")
+}
+
+const regi = () => {
+
+  if (usuario.value.trim() == "" && correo.value.trim() == "" && pass.value.trim() == "" && passaut.value.trim() == "") {
+    console.log("Llenar todos los datos")
+    return
+  }
+
+  if (pass.value !== passaut.value) {
+    console.log("mal rey")
+    return
+  }
+  console.log("adentro")
+
+  createUserWithEmailAndPassword(getAuth(), correo.value, pass.value).then((userCredential) => {
+    const user = userCredential.user
+    updateProfile(user, {
+      displayName: usuario.value,
+      photoURL: pass.value
+    })
+  })
 }
 
 </script>
@@ -116,7 +145,7 @@ const login = () => {
       height: 40px;
       border-radius: 50px;
       border: none;
-      box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.5);
+      box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
       padding: 0px 10px;
       outline: none;
       font-size: 20px;
@@ -136,7 +165,7 @@ const login = () => {
     cursor: pointer;
   }
 
-  .goface{
+  .goface {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -146,11 +175,11 @@ const login = () => {
     border-radius: 5%;
     background-color: #cac4c1;
 
-    img{
+    img {
       width: 75px;
       height: 75px;
       border-radius: 50%;
-      box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.5);
+      box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
       cursor: pointer;
     }
   }
