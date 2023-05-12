@@ -145,8 +145,8 @@ const num: Ref<number> = ref(20000)
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20% 5%;
     width: 30%;
-    height: 100%;
 
     .mainleftleft {
       background-color: white;
@@ -166,8 +166,10 @@ const num: Ref<number> = ref(20000)
         }
 
         .linea {
+          width: 1px;
+          padding: 0px 70px;
           margin-left: 20px;
-          width: 150px;
+          margin-right: 20px;
           height: 1px;
           background-color: black;
         }
@@ -207,8 +209,10 @@ const num: Ref<number> = ref(20000)
         }
 
         .linea {
+          width: 1px;
+          padding: 0px 70px;
           margin-left: 20px;
-          width: 150px;
+          margin-right: 20px;
           height: 1px;
           background-color: black;
         }

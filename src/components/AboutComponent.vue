@@ -53,8 +53,9 @@ const num: Ref<number> = ref(20000)
       background-color: white;
       box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
       border-radius: 5px;
-      width: 40%;
-      height: 80%;
+      padding: 10px 10px;
+      margin-right: 10px;
+      margin-left: 10px;
 
       .logo {
         margin-top: 50px;
@@ -77,13 +78,13 @@ const num: Ref<number> = ref(20000)
 }
 
 .mainright {
-  width: 45%;
-  height: 70%;
   display: flex;
   flex-direction: column;
   background-color: white;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
+  padding: 5px 10px;
+  margin-right: 20px;
   h1 {
     margin-left: 20px;
   }
