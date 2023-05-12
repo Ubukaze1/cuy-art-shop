@@ -1,9 +1,9 @@
 <template>
-  <MainPage />
+  <LoginPage/>
 </template>
 
 <script lang="ts" setup>
-import MainPage from '@/components/Main/MainPage.vue';
+import LoginPage from '@/components/Login/LoginPage.vue';
 </script>
 
 <style lang="scss" scoped>

@@ -1,9 +1,9 @@
 <template>
-  <MainPage />
+  <RegistroPage/>
 </template>
 
 <script lang="ts" setup>
-import MainPage from '@/components/Main/MainPage.vue';
+import RegistroPage from '@/components/Registro/RegistroPage.vue';
 </script>
 
 <style lang="scss" scoped>

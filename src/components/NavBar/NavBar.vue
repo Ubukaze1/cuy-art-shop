@@ -2,27 +2,27 @@
   <header class="head">
     <div class="lefthead">
       <button>
-        <img src="../assets/person.svg" alt="Persona">
+        <img src="../../assets/Logo-removebg-preview.png" alt="Persona">
       </button>
     </div>
     <div class="centerhead">
       <input type="text" name="text" id="one">
       <div class="centersearch">
-        <img src="../assets/Puntos.svg" alt="Puntos">
+        <img src="../../assets/Puntos.svg" alt="Puntos">
         <button>
-          <img src="../assets/search.svg" alt="Busqueda">
+          <img src="../../assets/search.svg" alt="Busqueda">
         </button>
       </div>
     </div>
     <div class="righthead">
-      <button>
-        <img src="../assets/person.svg" alt="Persona">
+      <button @click="login">
+        <img src="../../assets/person.svg" alt="Persona">
       </button>
       <button>
-        <img src="../assets/shopping_cart.svg" alt="Carro de compra">
+        <img src="../../assets/shopping_cart.svg" alt="Carro de compra">
       </button>
       <button>
-        <img src="../assets/menu.svg" alt="Menu" @click="menu = !menu">
+        <img src="../../assets/menu.svg" alt="Menu" @click="menu = !menu">
       </button>
     </div>
   </header>
@@ -30,12 +30,12 @@
     <div class="contain">
       <div class="salir">
         <button @click="menu = !menu">
-          <img src="../assets/close.svg" alt="Cerrar">
+          <img src="../../assets/close.svg" alt="Cerrar">
         </button>
       </div>
       <div class="opciones">
         <h2>Menu</h2>
-        <p href="#">Mi Cuenta</p>
+        <p href="#" @click="cuenta">Mi Cuenta</p>
         <p href="#" @click="acerca">Acerca de nosotros</p>
       </div>
     </div>
@@ -49,6 +49,13 @@ const menu: Ref<boolean> = ref(false);
 const router = useRouter();
 const acerca = () => {
   router.push("/about");
+};
+const login = () => {
+  router.push("/login");
+};
+
+const cuenta = () => {
+  router.push("/micuenta");
 };
 
 </script>
@@ -69,15 +76,18 @@ const acerca = () => {
   z-index: 100;
 
   .lefthead {
+    width: 15%;
+    display: flex;
+    justify-content: space-around;
     button {
       border: none;
       border-radius: 50%;
       outline: none;
       cursor: pointer;
+      width: 22%;
 
       img {
         width: 100%;
-        height: 100%;
       }
     }
   }

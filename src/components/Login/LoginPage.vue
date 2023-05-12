@@ -1,13 +1,14 @@
 <template>
   <div class="container">
     <NavBarUser />
-    <AboutComponent />
+    <LoginComponent />
   </div>
 </template>
 
 <script lang="ts" setup>
-import NavBarUser from './NavBarUser.vue';
-import AboutComponent from './AboutComponent.vue';
+import NavBarUser from '@/components/NavBar/NavBarUser.vue';
+import LoginComponent from '@/components/Login/LoginComponent.vue';
+
 </script>
 
 <style lang="scss" scoped>

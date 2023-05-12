@@ -44,11 +44,11 @@
     </div>
     <div class="mainright">
       <div class="promocion">
-        <img src="../assets/prom.jpg" alt="promocion">
+        <img src="../../assets/prom.jpg" alt="promocion">
       </div>
       <div class="targetas">
         <div class="targeta">
-          <img src="../assets/articulos/09757-BIG.jpg" alt="Primer Articulo">
+          <img src="../../assets/articulos/09757-BIG.jpg" alt="Primer Articulo">
           <div class="linea"></div>
           <h2>Vandola de Cafe</h2>
           <div class="price">
@@ -58,7 +58,7 @@
           <p>Ha, Pero que lindo</p>
         </div>
         <div class="targeta">
-          <img src="../assets/articulos/taza-tradicional.webp" alt="Segundo Articulo">
+          <img src="../../assets/articulos/taza-tradicional.webp" alt="Segundo Articulo">
           <div class="linea"></div>
           <h2>Taza personalizada de Ceramìca</h2>
           <div class="price">
@@ -68,7 +68,7 @@
           <p>Producto Tolimence, para tomar cafesito</p>
         </div>
         <div class="targeta">
-          <img src="../assets/articulos/9a0e8b4110eb49644003a6d56f7b1232.jpg" alt="Tercer Articulo">
+          <img src="../../assets/articulos/9a0e8b4110eb49644003a6d56f7b1232.jpg" alt="Tercer Articulo">
           <div class="linea"></div>
           <h2>Calletero :v</h2>
           <div class="price">

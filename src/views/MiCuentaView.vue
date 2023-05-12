@@ -1,9 +1,9 @@
 <template>
-  <MainPage />
+  <MiCuentaPage/>
 </template>
 
 <script lang="ts" setup>
-import MainPage from '@/components/Main/MainPage.vue';
+import MiCuentaPage from '@/components/MiCuenta/MiCuentaPage.vue';
 </script>
 
 <style lang="scss" scoped>

@@ -1,11 +1,11 @@
 <template>
   <header class="head">
     <button>
-      <img src="../assets/person.svg" alt="Persona">
+      <img src="../../assets/Logo-removebg-preview.png" alt="Persona">
     </button>
     <h1>CUYART-SHOP</h1>
     <button @click="home">
-      <img src="../assets/salir.svg" alt="Menu">
+      <img src="../../assets/salir.svg" alt="Menu">
     </button>
   </header>
 </template>
@@ -36,6 +36,7 @@ const home = () => {
     border-radius: 50px;
     width: 3%;
     height: 85%;
+    cursor: pointer;
     img {
       margin-left: 1px;
       width: 100%;

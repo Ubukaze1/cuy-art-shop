@@ -2,14 +2,14 @@
   <main class="main">
     <div class="mainleft">
       <div class="mainleftleft">
-        <img class="logo" src="../assets/Logo.jpeg" alt="El logo">
+        <img class="logo" src="../../assets/Logo.jpeg" alt="El logo">
         <h1>CUYART-SHOP</h1>
         <h3>Redes Sociales</h3>
-        <img src="../assets/youtube.png" alt="Youtube">
-        <img src="../assets/facebook.png" alt="Facebook">
-        <img src="../assets/twitch.png" alt="Twitch">
+        <img src="../../assets/youtube.png" alt="Youtube">
+        <img src="../../assets/facebook.png" alt="Facebook">
+        <img src="../../assets/twitch.png" alt="Twitch">
         <h3>Contàctanos</h3>
-        <img src="../assets/gmail.png" alt="Gmail">
+        <img src="../../assets/gmail.png" alt="Gmail">
       </div>
     </div>
     <div class="mainright">
