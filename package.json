@@ -6,11 +6,12 @@
     "dev": "vite",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
-    "deploy" : "gh-pages -d dist",
+    "deploy": "gh-pages -d dist",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "firebase": "^9.21.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },

@@ -9,13 +9,13 @@
     </div>
     <div class="in">
       <label for="">Correo</label>
-      <input type="text" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con">
+      <input type="text" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con" v-model="usuario">
     </div>
     <div class="in">
       <label for="">Contraseña</label>
-      <input type="password" name="pass" id="pass" placeholder="Contraseña">
+      <input type="password" name="pass" id="pass" placeholder="Contraseña" v-model="contraseña">
     </div>
-    <button>Ingresar</button>
+    <button @click="authuser">Ingresar</button>
     <div class="goface">
       <img src="../../assets/gmail.png" alt="Google">
       <img src="../../assets/facebook.png" alt="Facebook">
@@ -30,12 +30,35 @@
 
 <script lang="ts" setup>
 import { useRouter } from "vue-router"
+import { ref, type Ref } from "vue"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 
 const router = useRouter()
 
 const registro = () => {
   router.push("/registro")
 }
+
+const usuario: Ref<string> = ref("")
+const contraseña: Ref<string> = ref("")
+
+const authuser = () => {
+  const auth = getAuth()
+  signInWithEmailAndPassword(auth, usuario.value, contraseña.value)
+    .then((userCredential) => {
+      alert("Bienvenido")
+    })
+    .then(() => {
+      router.push("/micuenta")
+    })
+    .catch((error) => {
+      alert("Intente de nuevo")
+      const errorCode = error.code
+      const errorMessage = error.message
+    })
+}
+
+
 
 
 </script>
