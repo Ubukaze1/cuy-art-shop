@@ -77,7 +77,7 @@
   }
 
   .in {
-    width: 500px;
+    width: 550px;
     padding: 10px 5px;
     display: flex;
     justify-content: space-between;

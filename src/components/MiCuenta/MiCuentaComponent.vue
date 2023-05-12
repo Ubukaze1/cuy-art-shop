@@ -150,7 +150,7 @@ const ver: Ref<boolean> = ref(true)
   border-radius: 5px;
   width: 50%;
   padding: 5px 10px;
-  padding-bottom: 250px;
+  margin-bottom: 250px;
   background-color: #e3dfde;
 
   h1 {
