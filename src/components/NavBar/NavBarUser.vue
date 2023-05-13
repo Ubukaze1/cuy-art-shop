@@ -1,9 +1,9 @@
 <template>
   <header class="head">
-    <button>
+    <button @click="menu">
       <img src="../../assets/Logo-removebg-preview.png" alt="Persona">
     </button>
-    <h1>CUYART-SHOP</h1>
+    <h1 @click="casa">CUYART-SHOP</h1>
     <button @click="home">
       <img src="../../assets/salir.svg" alt="Menu">
     </button>
@@ -12,9 +12,23 @@
 
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
+import { getAuth, signOut } from 'firebase/auth'
 const router = useRouter()
 const home = () => {
+  signOut(getAuth())
   router.push('/')
+}
+
+const casa = () => {
+  router.push('/')
+}
+
+const menu = () => {
+  if (getAuth().currentUser != null) {
+    router.push('/micuenta')
+  } else {
+    router.push('/login')
+  }
 }
 </script>
 
@@ -31,12 +45,18 @@ const home = () => {
   position: fixed;
   z-index: 100;
   color: white;
+
+  h1 {
+    cursor: pointer;
+  }
+
   button {
     border: none;
     border-radius: 50px;
     width: 3%;
     height: 85%;
     cursor: pointer;
+
     img {
       margin-left: 1px;
       width: 100%;

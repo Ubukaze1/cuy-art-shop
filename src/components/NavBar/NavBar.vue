@@ -26,7 +26,7 @@
       </button>
     </div>
   </header>
-  <div class="containmodal" v-show="menu" >
+  <div class="containmodal" v-show="menu">
     <div class="contain">
       <div class="salir">
         <button @click="menu = !menu">
@@ -45,17 +45,26 @@
 <script lang="ts" setup>
 import { ref, type Ref } from "vue";
 import { useRouter } from "vue-router";
+import { getAuth } from "firebase/auth";
 const menu: Ref<boolean> = ref(false);
 const router = useRouter();
 const acerca = () => {
   router.push("/about");
 };
 const login = () => {
-  router.push("/login");
+  if (getAuth().currentUser != null) {
+    router.push("/micuenta");
+  } else {
+    router.push("/login");
+  }
 };
 
 const cuenta = () => {
-  router.push("/micuenta");
+  if (getAuth().currentUser != null) {
+    router.push("/micuenta");
+  } else {
+    router.push("/login");
+  }
 };
 
 </script>
@@ -79,6 +88,7 @@ const cuenta = () => {
     width: 15%;
     display: flex;
     justify-content: space-around;
+
     button {
       border: none;
       border-radius: 50%;
@@ -196,6 +206,7 @@ const cuenta = () => {
     .salir {
       width: 50px;
       height: 50px;
+
       button {
         border: none;
         outline: none;

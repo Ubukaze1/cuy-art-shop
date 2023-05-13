@@ -41,6 +41,9 @@
 import { useRouter } from "vue-router"
 import { type Ref, ref } from 'vue'
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { useRegistroStore } from '../../store/registro'
+
+const reg = useRegistroStore()
 
 const usuario: Ref<string> = ref("")
 const pass: Ref<string> = ref("")
@@ -53,7 +56,7 @@ const login = () => {
   router.push("/login")
 }
 
-const regi = () => {
+const  regi = async () => {
 
   if (usuario.value.trim() == "" && correo.value.trim() == "" && pass.value.trim() == "" && passaut.value.trim() == "") {
     console.log("Llenar todos los datos")
@@ -64,15 +67,24 @@ const regi = () => {
     console.log("mal rey")
     return
   }
+
+  reg.addRegistro({
+    nombre: usuario.value.toString(),
+    correo: correo.value.toString(),
+    password: pass.value.toString(),
+    telefono: '',
+    direccion: ''
+  })
   console.log("adentro")
 
-  createUserWithEmailAndPassword(getAuth(), correo.value, pass.value).then((userCredential) => {
-    const user = userCredential.user
-    updateProfile(user, {
-      displayName: usuario.value,
-      photoURL: pass.value
-    })
+
+  await createUserWithEmailAndPassword(getAuth(), correo.value, pass.value).then((userCredential) => {
   })
+
+  router.push("/micuenta")
+
+
+
 }
 
 </script>

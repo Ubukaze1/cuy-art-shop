@@ -42,16 +42,46 @@
       </div>
     </div>
     <div class="mainright">
-      <MiCuentaInformacion v-show="ver" />
-      <MiCuentaActualizar v-show="!ver" />
+      <MiCuentaInformacion v-show="ver" :="use"/>
+      <MiCuentaActualizar v-show="!ver" :="use"/>
     </div>
   </main>
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref, watch } from 'vue'
+import { ref, type Ref, onBeforeMount } from 'vue'
+import { useRegistroStore } from '../../store/registro'
+import { getAuth } from 'firebase/auth'
 import MiCuentaInformacion from './MiCuentaInformacion.vue';
 import MiCuentaActualizar from './MiCuentaActualizar.vue';
+
+  const reg = useRegistroStore()
+  const user = getAuth().currentUser
+
+let use = {}
+
+const actua = () => {
+  use = {
+    nom: reg.getRegistro(user?.email?.toString() || ' ')?.nombre || ' ',
+    cor: reg.getRegistro(user?.email?.toString() || '')?.correo || '',
+    pas: reg.getRegistro(user?.email?.toString() || '')?.password || '',
+    tel: reg.getRegistro(user?.email?.toString() || '')?.telefono || '',
+    dir: reg.getRegistro(user?.email?.toString() || '')?.direccion || '',
+  }
+}
+
+onBeforeMount(() => {
+
+  const reg = useRegistroStore()
+  const user = getAuth().currentUser
+  use = {
+    nom: reg.getRegistro(user?.email?.toString() || ' ')?.nombre || ' ',
+    cor: reg.getRegistro(user?.email?.toString() || '')?.correo || '',
+    pas: reg.getRegistro(user?.email?.toString() || '')?.password || '',
+    tel: reg.getRegistro(user?.email?.toString() || '')?.telefono || '',
+    dir: reg.getRegistro(user?.email?.toString() || '')?.direccion || '',
+  }
+})
 
 const ver: Ref<boolean> = ref(true)
 
@@ -88,7 +118,7 @@ const centopc11 = () => {
   if (opcselc.value = false) {
     opcselc1.value = !opcselc1.value
   } else {
-    opcselc.value = false 
+    opcselc.value = false
     opcselc1.value = !opcselc1.value
   }
 }
@@ -97,7 +127,7 @@ const centopc22 = () => {
   if (opcselc1.value = false) {
     opcselc.value = !opcselc.value
   } else {
-    opcselc1.value = false 
+    opcselc1.value = false
     opcselc.value = !opcselc.value
   }
 }

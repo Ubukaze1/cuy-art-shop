@@ -84,7 +84,12 @@
 
 <script lang="ts" setup>
 import { ref, type Ref, watch } from 'vue'
+import {useRegistroStore} from '../../store/registro'
+
+const reg = useRegistroStore()
 const num: Ref<number> = ref(20000)
+
+console.log(reg.getAll())
 </script>
 
 <style lang="scss" scoped>

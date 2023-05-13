@@ -9,39 +9,40 @@
     </div>
     <div class="in">
       <label for="">Nombre de Usuario</label>
-      <input type="text" name="usuario" id="usuario" placeholder="Hugo Ricardo" disabled v-model="usuario">
+      <input type="text" name="usuario" id="usuario1" :placeholder="nom" disabled v-model="usuario">
     </div>
     <div class="in">
       <label for="">Correo</label>
-      <input type="text" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con" disabled v-model="correo">
+      <input type="email" name="correo" id="correo" :placeholder="cor" disabled v-model="correo">
     </div>
     <div class="in">
       <label for="">Telèfono</label>
-      <input type="text" name="usuario" id="usuario" disabled v-model="telefo">
+      <input :placeholder="tel" type="number" name="telefono" id="telefono" disabled v-model="telefo">
     </div>
     <div class="in">
       <label for="">Direcciòn</label>
-      <input type="text" name="usuario" id="usuario" disabled v-model="direc">
+      <input :placeholder="dir" type="text" name="direccion" id="dirrecion" disabled v-model="direc">
     </div>
   </main>
 </template>
 
 <script lang="ts" setup>
-import {getAuth} from 'firebase/auth'
-import {type Ref, ref} from 'vue'
+import { type Ref, ref } from 'vue'
 
-const user = getAuth().currentUser
+
+defineProps({
+  nom: String,
+  cor: String,
+  pas: String,
+  tel: String,
+  dir: String
+})
+
 
 const usuario: Ref<string> = ref('')
 const correo: Ref<string> = ref('')
 const telefo: Ref<string> = ref('')
 const direc: Ref<string> = ref('')
-
-usuario.value = user?.displayName?.toString() || ''
-correo.value = user?.email?.toString() || ''
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -118,7 +119,7 @@ correo.value = user?.email?.toString() || ''
       font-size: 20px;
       font-weight: 700;
       color: black;
-      background-color:#d4cbc9;
+      background-color: #d4cbc9;
     }
   }
 
