@@ -41,7 +41,11 @@
 import { useRouter } from "vue-router"
 import { type Ref, ref } from 'vue'
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { collection, addDoc, setDoc, doc } from 'firebase/firestore'
 import { useRegistroStore } from '../../store/registro'
+import { db } from '../../Firebase/Fire'
+
+
 
 const reg = useRegistroStore()
 
@@ -56,7 +60,7 @@ const login = () => {
   router.push("/login")
 }
 
-const  regi = async () => {
+const regi = async () => {
 
   if (usuario.value.trim() == "" && correo.value.trim() == "" && pass.value.trim() == "" && passaut.value.trim() == "") {
     console.log("Llenar todos los datos")
@@ -68,18 +72,31 @@ const  regi = async () => {
     return
   }
 
-  reg.addRegistro({
-    nombre: usuario.value.toString(),
-    correo: correo.value.toString(),
-    password: pass.value.toString(),
-    telefono: '',
-    direccion: ''
-  })
   console.log("adentro")
 
 
-  await createUserWithEmailAndPassword(getAuth(), correo.value, pass.value).then((userCredential) => {
+  try {
+    await setDoc(doc(db, "usuarios", correo.value.toString()), {
+      nombre: usuario.value.toString(),
+      correo: correo.value.toString(),
+      password: pass.value.toString(),
+      uso: true
+    }).then(() => {
+      console.log("Document successfully written!");
+    })
+    console.log("Document written with ID: ", doc( db, "usuarios", correo.value.toString()).id);
+  } catch (error) {
+    console.log("Error adding document: ", error)
+  }
+
+
+  await createUserWithEmailAndPassword(getAuth(), correo.value.toString(), pass.value.toString()).then((userCredential) => {
   })
+
+  reg.clearAll()
+  await reg.setAll()
+
+
 
   router.push("/micuenta")
 

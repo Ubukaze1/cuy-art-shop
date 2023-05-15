@@ -14,8 +14,8 @@
 import { useRouter } from 'vue-router'
 import { getAuth, signOut } from 'firebase/auth'
 const router = useRouter()
-const home = () => {
-  signOut(getAuth())
+const home = async () => {
+  await signOut(getAuth())
   router.push('/')
 }
 

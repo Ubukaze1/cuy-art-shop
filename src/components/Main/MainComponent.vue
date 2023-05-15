@@ -83,17 +83,22 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref, watch } from 'vue'
-import {useRegistroStore} from '../../store/registro'
+import { ref, type Ref, onBeforeMount } from 'vue'
+import { useRegistroStore } from '../../store/registro'
 
 const reg = useRegistroStore()
 const num: Ref<number> = ref(20000)
 
-console.log(reg.getAll())
+
+onBeforeMount(async() => {
+  reg.clearAll()
+  await reg.setAll()
+  reg.getAll()
+})
+
 </script>
 
 <style lang="scss" scoped>
-
 @media only screen and (max-width: 1570px) {
   .mainleft {
     margin-right: 40px;

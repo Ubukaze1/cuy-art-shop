@@ -28,7 +28,7 @@
       <input :placeholder="dir" type="text" name="dirreccion" id="dirreccion" v-model="direcciòn">
     </div>
     <div class="actu">
-      <button class="bt-act" @click="aa">Actualizar</button>
+      <button class="bt-act" @click="actual">Actualizar</button>
       <button class="bt-can">Cancelar</button>
     </div>
   </main>
@@ -36,8 +36,10 @@
 
 <script lang="ts" setup>
 import { type Ref, ref } from 'vue'
-import { getAuth } from 'firebase/auth'
+import { getAuth, updateEmail, updatePassword } from 'firebase/auth'
+import { updateDoc, doc, deleteDoc, setDoc } from 'firebase/firestore'
 import { useRegistroStore } from '../../store/registro'
+import { db } from '../../Firebase/Fire'
 
 defineProps({
   nom: String,
@@ -57,14 +59,152 @@ const telefono: Ref<string> = ref("")
 const direcciòn: Ref<string> = ref("")
 
 
-const aa = () => {
-  if (getAuth().currentUser != null) {
-    reg.adddireccion(user?.email?.toString() || '', direcciòn.value)
-    reg.addtelefono(user?.email?.toString() || '', telefono.value)
-  } else {
-    console.log("Nada")
+const actual = async () => {
+
+
+  let b = false
+
+  if (user == null) return
+
+  console.log(user)
+
+  let cor = user?.email?.toString()
+  let us = reg.getRegistro(user.email?.toString() || '')?.nombre || ''
+  let pas = reg.getRegistro(user.email?.toString() || '')?.password || ''
+  let tel = reg.getRegistro(user.email?.toString() || '')?.telefono || ''
+  let dir = reg.getRegistro(user.email?.toString() || '')?.direccion || ''
+
+  if (reg.getRegistro(user?.email?.toString() || '')?.correo != correo.value && correo.value.trim() != '') {
+    try {
+      await updateEmail(user, correo.value.toString()).then(() => {
+        console.log("correo actualizado")
+        b = true
+      }).catch((error) => {
+        console.log("error al actualizar correo")
+        return
+      }).then(() => {
+        console.log("documento creado")
+      }).catch((error) => {
+        console.log("error al crear el documento")
+        return
+      });
+    } catch (error) {
+      console.log(error)
+    }
   }
+
+  if (reg.getRegistro(user?.email?.toString() || '')?.password != pass.value && pass.value.trim() != '') {
+    try {
+      await updatePassword(user, pass.value.toString()).then(() => {
+        console.log("Contraseña actualizado")
+      }).catch((error) => {
+        console.log("error al actualizar la contraseña")
+        return
+      }).then(() => {
+        console.log("documento creado")
+      }).catch((error) => {
+        console.log("error al crear el documento")
+        return
+      });
+    } catch (error) {
+      console.log(error)
+    }
+    try {
+      await updateDoc(doc(db, "usuarios", cor || ''), {
+        password: pass.value
+      }).then(() => {
+        console.log("documento actualizado")
+      }).catch((error) => {
+        console.log("error al actualizar el documento")
+        return
+      }).then(() => {
+        console.log("documento creado")
+      }).catch((error) => {
+        console.log("error al crear el documento")
+        return
+      });
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  if (b) {
+    try {
+      await deleteDoc(doc(db, "usuarios", cor || '')).then(() => {
+        console.log("documento eliminado")
+      }).catch((error) => {
+        console.log("error al eliminar el documento")
+        return
+      });
+      await setDoc(doc(db, "usuarios", correo.value.toString()), {
+        nombre: usuario.value.toString().trim() != '' ? usuario.value.toString() : us.toString(),
+        correo: correo.value.toString(),
+        password: pass.value.toString().trim() != '' ? pass.value.toString() : pas.toString(),
+        telefono: telefono.value.toString().trim() != '' ? telefono.value.toString() : tel.toString(),
+        direccion: direcciòn.value.toString().trim() != '' ? direcciòn.value.toString() : dir.toString(),
+        uso: true
+      }).then(() => {
+        console.log("documento creado")
+      }).catch((error) => {
+        console.log("error al crear el documento")
+        return
+      });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  if (usuario.value.toString().trim() != '') {
+    try {
+      await updateDoc(doc(db, "usuarios", cor || ''), {
+        nombre: usuario.value
+      }).then(() => {
+        console.log("documento actualizado")
+      }).catch((error) => {
+        console.log("error al actualizar el documento")
+        return
+      });
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  if (telefono.value.toString().trim() != '') {
+    try {
+      await updateDoc(doc(db, "usuarios", cor || ''), {
+        telefono: telefono.value
+      }).then(() => {
+        console.log("documento actualizado")
+      }).catch((error) => {
+        console.log("error al actualizar el documento")
+        return
+      });
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  if (direcciòn.value.toString().trim() != '') {
+    try {
+      await updateDoc(doc(db, "usuarios", cor || ''), {
+        direccion: direcciòn.value
+      }).then(() => {
+        console.log("documento actualizado")
+      }).catch((error) => {
+        console.log("error al actualizar el documento")
+        return
+      });
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  reg.clearAll()
+  await reg.setAll()
 }
+
+
+
+
 
 
 
