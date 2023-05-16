@@ -18,7 +18,7 @@
       <button @click="login">
         <img src="../../assets/person.svg" alt="Persona">
       </button>
-      <button>
+      <button @click="carro">
         <img src="../../assets/shopping_cart.svg" alt="Carro de compra">
       </button>
       <button>
@@ -58,6 +58,11 @@ const login = () => {
     router.push("/login");
   }
 };
+
+const carro = () => {
+  router.push({name: 'Carrito'})
+  console.log("Carroo")
+}
 
 const cuenta = () => {
   if (getAuth().currentUser != null) {
