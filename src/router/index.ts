@@ -4,6 +4,10 @@ import AboutView from '../views/AboutView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegistroView from '../views/RegistroView.vue'
 import MiCuentaView from '../views/MiCuentaView.vue'
+import MiCuentaInformacionVue from '@/components/MiCuenta/MiCuentaInformacion.vue'
+import MiCuentaActualizarVue from '@/components/MiCuenta/MiCuentaActualizar.vue'
+import VendedorMain from '@/components/MiCuenta/Vendedor/VendedorMain.vue'
+import VendedorAñadir from '@/components/MiCuenta/Vendedor/VendedorAñadir.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,7 +35,29 @@ const router = createRouter({
     {
       path: '/micuenta',
       name: 'MiCuenta',
-      component: MiCuentaView
+      component: MiCuentaView,
+      children: [
+        {
+          path: 'informacion',
+          name: 'Informacion',
+          component: MiCuentaInformacionVue
+        },
+        {
+          path: 'actualizar',
+          name: 'Actualizar',
+          component: MiCuentaActualizarVue
+        },
+        {
+          path: 'vendedor',
+          name: 'Vendedor',
+          component: VendedorMain
+        },
+        {
+          path: 'añadir-producto',
+          name: 'Añadir',
+          component: VendedorAñadir
+        },
+      ]
     }
   ]
 })

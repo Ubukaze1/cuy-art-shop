@@ -42,34 +42,23 @@
       </div>
     </div>
     <div class="mainright">
-      <MiCuentaInformacion v-show="ver" :="use"/>
-      <MiCuentaActualizar v-show="!ver" :="use"/>
+      <RouterView />
     </div>
   </main>
 </template>
 
 <script lang="ts" setup>
 import { ref, type Ref, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
 import { useRegistroStore } from '../../store/registro'
 import { getAuth } from 'firebase/auth'
 import MiCuentaInformacion from './MiCuentaInformacion.vue';
 import MiCuentaActualizar from './MiCuentaActualizar.vue';
+import VendedorMain from './Vendedor/VendedorMain.vue'
 
-  const reg = useRegistroStore()
-  const user = getAuth().currentUser
+const router = useRouter()
 
 let use = {}
-
-const actua = () => {
-  use = {
-    nom: reg.getRegistro(user?.email?.toString() || ' ')?.nombre || ' ',
-    cor: reg.getRegistro(user?.email?.toString() || '')?.correo || '',
-    pas: reg.getRegistro(user?.email?.toString() || '')?.password || '',
-    tel: reg.getRegistro(user?.email?.toString() || '')?.telefono || '',
-    dir: reg.getRegistro(user?.email?.toString() || '')?.direccion || '',
-  }
-}
-
 onBeforeMount(() => {
 
   const reg = useRegistroStore()
@@ -86,36 +75,45 @@ onBeforeMount(() => {
 const ver: Ref<boolean> = ref(true)
 
 const cent = () => {
-  if (opc.value = false) {
+  if (opc.value === false) {
     ver.value = !ver.value
   } else {
     opc.value = false
-    ver.value = !ver.value
+    ver.value = true
+    router.push({ name: 'Informacion' })
   }
+  if (ver.value === true) {
+    router.push({ name: 'Informacion' })
+  } else {
+    router.push({ name: 'Actualizar' })
+  }
+
 }
 
 const centopc = () => {
-  if (ver.value = true) {
+  if (ver.value === true) {
     opc.value = !opc.value
   } else {
     ver.value = true
     opc.value = !opc.value
   }
 
-  if (opc.value = false) {
+  if (opc.value === false) {
     opcselc.value = false
     opcselc1.value = false
   }
 
 
-  if (opc.value = true) {
+  if (opc.value === true) {
     opcselc.value = false
     opcselc1.value = false
   }
+
+  router.push({ name: 'Vendedor' })
 }
 
 const centopc11 = () => {
-  if (opcselc.value = false) {
+  if (opcselc.value === false) {
     opcselc1.value = !opcselc1.value
   } else {
     opcselc.value = false
@@ -124,12 +122,13 @@ const centopc11 = () => {
 }
 
 const centopc22 = () => {
-  if (opcselc1.value = false) {
+  if (opcselc1.value === false) {
     opcselc.value = !opcselc.value
   } else {
     opcselc1.value = false
     opcselc.value = !opcselc.value
   }
+  router.push({name: 'Añadir'})
 }
 
 const opc: Ref<boolean> = ref(false)
@@ -153,7 +152,6 @@ const opcselc1: Ref<boolean> = ref(false)
     width: 360px;
     height: 100%;
     padding: 10px;
-    margin-right: 200px;
 
     .mainleftleft {
       display: flex;
@@ -198,11 +196,12 @@ const opcselc1: Ref<boolean> = ref(false)
 
         .rot {
           position: relative;
-          bottom: 4px;
+          bottom: 1px;
           transform: rotate(15deg);
         }
 
         .lineaa2 {
+          top: 3px;
           width: 25px;
           height: 2px;
           background-color: black;
@@ -233,11 +232,12 @@ const opcselc1: Ref<boolean> = ref(false)
 
         .rot {
           position: relative;
-          bottom: 4px;
+          bottom: 1px;
           transform: rotate(15deg);
         }
 
         .lineaa3 {
+          top: 3px;
           width: 25px;
           height: 2px;
           background-color: black;
@@ -275,12 +275,13 @@ const opcselc1: Ref<boolean> = ref(false)
 
           .rot {
             position: relative;
-            bottom: 4px;
+            bottom: 1px;
             transform: rotate(15deg);
           }
 
 
           .lineaa4 {
+            top: 3px;
             width: 25px;
             height: 2px;
             background-color: black;
@@ -311,12 +312,13 @@ const opcselc1: Ref<boolean> = ref(false)
 
           .rot {
             position: relative;
-            bottom: 4px;
+            bottom: 1px;
             transform: rotate(15deg);
           }
 
 
           .lineaa5 {
+            top: 3px;
             width: 25px;
             height: 2px;
             background-color: black;
@@ -356,12 +358,13 @@ const opcselc1: Ref<boolean> = ref(false)
 }
 
 .mainright {
+  margin-left: 100px;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  width: 50%;
+  width: 65%;
+  height: 90%;
   padding: 5px 10px;
-  margin-bottom: 250px;
   background-color: #e3dfde;
 
   h1 {

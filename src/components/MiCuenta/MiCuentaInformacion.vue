@@ -28,15 +28,18 @@
 
 <script lang="ts" setup>
 import { type Ref, ref } from 'vue'
+import { getAuth } from 'firebase/auth'
+import { useRegistroStore } from '../../store/registro'
+
+const reg = useRegistroStore()
+const user = getAuth().currentUser
 
 
-defineProps({
-  nom: String,
-  cor: String,
-  pas: String,
-  tel: String,
-  dir: String
-})
+let nom = reg.getRegistro(user?.email?.toString() || '')?.nombre || ''
+let cor = reg.getRegistro(user?.email?.toString() || '')?.correo || ''
+let pas = reg.getRegistro(user?.email?.toString() || '')?.password || ''
+let tel = reg.getRegistro(user?.email?.toString() || '')?.telefono || ''
+let dir = reg.getRegistro(user?.email?.toString() || '')?.direccion || ''
 
 
 const usuario: Ref<string> = ref('')
@@ -52,8 +55,8 @@ const direc: Ref<string> = ref('')
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 250px;
   background-color: #e3dfde;
+  height: 100%;
 
   .imgprofile {
     margin-top: 25px;

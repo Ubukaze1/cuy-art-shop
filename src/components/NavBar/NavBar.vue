@@ -53,7 +53,7 @@ const acerca = () => {
 };
 const login = () => {
   if (getAuth().currentUser != null) {
-    router.push("/micuenta");
+    router.push({name: 'Informacion'});
   } else {
     router.push("/login");
   }
@@ -61,7 +61,7 @@ const login = () => {
 
 const cuenta = () => {
   if (getAuth().currentUser != null) {
-    router.push("/micuenta");
+    router.push({name: 'Informacion'});
   } else {
     router.push("/login");
   }

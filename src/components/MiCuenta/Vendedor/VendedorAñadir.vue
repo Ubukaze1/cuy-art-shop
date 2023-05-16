@@ -1,0 +1,152 @@
+<template>
+  <main class="main">
+    <div class="left">
+      <div class="top">
+        <h1>Añadir Productos</h1>
+        <div class="linea"></div>
+      </div>
+      <div class="center">
+        <div class="leftcenter">
+          <h2>Nombre del Producto</h2>
+          <h2>Precio del producto</h2>
+          <h2>Stock del Producto</h2>
+          <h2>Imàgenes del producto</h2>
+          <h2>Descripciòn</h2>
+        </div>
+        <div class="rightcenter">
+          <input type="text">
+          <input type="text">
+          <input type="text">
+          <input type="text">
+          <textarea>asdflkjasdflkj</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="rightop">
+        <div class="imgprof">
+          <img src="../../../assets/person.svg" alt="Persona">
+        </div>
+        <h1>Nombre :V</h1>
+      </div>
+    </div>
+  </main>
+</template>
+
+<script lang="ts" setup>
+</script>
+
+<style lang="scss" scoped>
+.main {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 500px;
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+
+    .top {
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+      margin-bottom: 30px;
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 500;
+        margin: 0px;
+      }
+
+      .linea {
+        width: 30%;
+        height: 2px;
+        background-color: #000;
+      }
+    }
+
+    .center {
+      display: flex;
+      .leftcenter {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        h2 {
+          width: 250px;
+        }
+      }
+      .rightcenter {
+        margin-top: 20px;
+        margin-left: 20px;
+        display: flex;
+        flex-direction: column;
+        input {
+          font-size: 20px;
+          padding: 10px 300px 10px 10px;
+          width: 300px;
+          margin-bottom: 28px;
+          border: none;
+          box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.75);
+          border-radius: 50px;
+        }
+
+        textarea {
+          margin-top: 10px;
+          padding: 5px 500px 250px 5px;
+          box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.75);
+          border: none;
+        }
+
+
+      }
+
+    }
+  }
+
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 300px;
+  height: 100%;
+
+  .rightop {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin: 0px;
+    }
+
+    .imgprof {
+      margin-top: 25px;
+      padding: 10px 10px;
+      border-radius: 50%;
+      display: flex;
+      background-color: #5d61c6;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      box-shadow: -15px -15px 5px 5px rgba(188, 194, 216, 0.75);
+
+      img {
+        width: 200px;
+      }
+    }
+  }
+}
+}
+</style>

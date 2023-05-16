@@ -36,18 +36,13 @@
 
 <script lang="ts" setup>
 import { type Ref, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { getAuth, updateEmail, updatePassword } from 'firebase/auth'
 import { updateDoc, doc, deleteDoc, setDoc } from 'firebase/firestore'
 import { useRegistroStore } from '../../store/registro'
 import { db } from '../../Firebase/Fire'
 
-defineProps({
-  nom: String,
-  cor: String,
-  pas: String,
-  tel: String,
-  dir: String
-})
+const router = useRouter()
 
 const reg = useRegistroStore()
 const user = getAuth().currentUser
@@ -58,6 +53,11 @@ const pass: Ref<string> = ref("")
 const telefono: Ref<string> = ref("")
 const direcciòn: Ref<string> = ref("")
 
+let nom = reg.getRegistro(user?.email?.toString() || '')?.nombre || ''
+let cor = reg.getRegistro(user?.email?.toString() || '')?.correo || ''
+let pas = reg.getRegistro(user?.email?.toString() || '')?.password || ''
+let tel = reg.getRegistro(user?.email?.toString() || '')?.telefono || ''
+let dir = reg.getRegistro(user?.email?.toString() || '')?.direccion || ''
 
 const actual = async () => {
 
@@ -200,6 +200,8 @@ const actual = async () => {
   }
   reg.clearAll()
   await reg.setAll()
+
+  router.push({ name: 'Informacion' })
 }
 
 
@@ -219,8 +221,9 @@ const actual = async () => {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 250px;
   background-color: #e3dfde;
+  margin-bottom: 500px;
+  height: 100%;
 
   .imgprofile {
     margin-top: 25px;

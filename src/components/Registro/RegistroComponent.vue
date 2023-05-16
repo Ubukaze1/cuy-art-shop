@@ -98,7 +98,7 @@ const regi = async () => {
 
 
 
-  router.push("/micuenta")
+  router.push({ name: 'Informacion'})
 
 
 

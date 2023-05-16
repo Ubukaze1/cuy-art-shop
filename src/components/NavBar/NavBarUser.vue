@@ -25,7 +25,7 @@ const casa = () => {
 
 const menu = () => {
   if (getAuth().currentUser != null) {
-    router.push('/micuenta')
+    router.push({name: 'Informacion'})
   } else {
     router.push('/login')
   }

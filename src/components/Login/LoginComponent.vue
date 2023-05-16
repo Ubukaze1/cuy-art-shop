@@ -50,7 +50,7 @@ const authuser = () => {
       alert("Bienvenido")
     })
     .then(() => {
-      router.push("/micuenta")
+      router.push({name: 'Informacion'})
     })
     .catch((error) => {
       alert("Intente de nuevo")
