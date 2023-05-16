@@ -9,19 +9,19 @@
     </div>
     <div class="in">
       <label for="">Nombre Usuario</label>
-      <input type="text" name="usuario" id="usuario" placeholder="Hugo Ricardo" v-model="usuario" required>
+      <input type="text" name="usuario" id="usuario" v-model="usuario" required>
     </div>
     <div class="in">
       <label for="">Correo</label>
-      <input type="email" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con" v-model="correo" required>
+      <input type="email" name="usuario" id="usuario" v-model="correo" required>
     </div>
     <div class="in">
       <label for="">Contraseña</label>
-      <input type="password" name="pass" id="pass" placeholder="Contraseña" v-model="pass" required>
+      <input type="password" name="pass" id="pass" v-model="pass" required>
     </div>
     <div class="in">
       <label for="">Repite Contraseña</label>
-      <input type="password" name="pass" id="pass" placeholder="Contraseña" v-model="passaut" required>
+      <input type="password" name="pass" id="pass" v-model="passaut" required>
     </div>
     <button @click="regi">Registrate</button>
     <div class="goface">

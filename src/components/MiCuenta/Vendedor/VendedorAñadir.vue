@@ -11,13 +11,16 @@
           <h2>Precio del producto</h2>
           <h2>Stock del Producto</h2>
           <h2>Imàgenes del producto</h2>
-          <h2>Descripciòn</h2>
+          <h2 class="dee">Descripciòn</h2>
         </div>
         <div class="rightcenter">
           <input type="text">
           <input type="text">
           <input type="text">
-          <input type="text">
+          <div class="añaimg">
+            <img src="../../../assets/articulos/cuy.jpeg" alt="Es un cuy">
+            <button>añadir</button>
+          </div>
           <textarea>asdflkjasdflkj</textarea>
         </div>
       </div>
@@ -79,6 +82,11 @@
         h2 {
           width: 250px;
         }
+
+        .dee {
+          margin-top: 180px;
+        }
+
       }
       .rightcenter {
         margin-top: 20px;
@@ -93,6 +101,26 @@
           border: none;
           box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.75);
           border-radius: 50px;
+        }
+
+        .añaimg {
+          display: flex;
+          margin-bottom: 28px;
+          img {
+            width: 200px;
+            height: 200px;
+          }
+          button {
+            width: 75px;
+            height: 25px;
+            border: none;
+            border-radius: 50px;
+            background-color: #5d61c6;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 500;
+            box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.75);
+          }
         }
 
         textarea {

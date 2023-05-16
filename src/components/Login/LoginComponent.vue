@@ -9,11 +9,11 @@
     </div>
     <div class="in">
       <label for="">Correo</label>
-      <input type="text" name="usuario" id="usuario" placeholder="hugoRicardo@gmail.con" v-model="usuario">
+      <input type="text" name="usuario" id="usuario" v-model="usuario">
     </div>
     <div class="in">
       <label for="">Contraseña</label>
-      <input type="password" name="pass" id="pass" placeholder="Contraseña" v-model="contraseña">
+      <input type="password" name="pass" id="pass" v-model="contraseña">
     </div>
     <button @click="authuser">Ingresar</button>
     <div class="goface">
