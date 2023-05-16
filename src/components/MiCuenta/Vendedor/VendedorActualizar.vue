@@ -2,7 +2,7 @@
   <main class="main">
     <div class="left">
       <div class="top">
-        <h1>Añadir Productos</h1>
+        <h1>Actualizar Productos</h1>
         <div class="linea"></div>
       </div>
       <div class="center">
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="bt">
-        <button class="bt-add">Añadir</button>
+        <button class="bt-add">Actualizar</button>
         <button class="bt-can">Cancelar</button>
       </div>
     </div>

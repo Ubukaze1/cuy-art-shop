@@ -73,6 +73,9 @@ onBeforeMount(() => {
 })
 
 const ver: Ref<boolean> = ref(true)
+const opc: Ref<boolean> = ref(false)
+const opcselc: Ref<boolean> = ref(false)
+const opcselc1: Ref<boolean> = ref(false)
 
 const cent = () => {
   if (opc.value === false) {
@@ -92,10 +95,14 @@ const cent = () => {
 
 const centopc = () => {
   if (ver.value === true) {
-    opc.value = !opc.value
+    if (!opc.value) {
+      opc.value = !opc.value
+    }
   } else {
     ver.value = true
-    opc.value = !opc.value
+    if (!opc.value) {
+      opc.value = !opc.value
+    }
   }
 
   if (opc.value === false) {
@@ -119,6 +126,7 @@ const centopc11 = () => {
     opcselc.value = false
     opcselc1.value = !opcselc1.value
   }
+  router.push({ name: 'ActualizarProd' })
 }
 
 const centopc22 = () => {
@@ -128,12 +136,9 @@ const centopc22 = () => {
     opcselc1.value = false
     opcselc.value = !opcselc.value
   }
-  router.push({name: 'Añadir'})
+  router.push({ name: 'Añadir' })
 }
 
-const opc: Ref<boolean> = ref(false)
-const opcselc: Ref<boolean> = ref(false)
-const opcselc1: Ref<boolean> = ref(false)
 
 </script>
 

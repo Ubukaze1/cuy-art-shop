@@ -8,6 +8,7 @@ import MiCuentaInformacionVue from '@/components/MiCuenta/MiCuentaInformacion.vu
 import MiCuentaActualizarVue from '@/components/MiCuenta/MiCuentaActualizar.vue'
 import VendedorMain from '@/components/MiCuenta/Vendedor/VendedorMain.vue'
 import VendedorAñadir from '@/components/MiCuenta/Vendedor/VendedorAñadir.vue'
+import VendedorActualizar from '@/components/MiCuenta/Vendedor/VendedorActualizar.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,11 @@ const router = createRouter({
           path: 'añadir-producto',
           name: 'Añadir',
           component: VendedorAñadir
+        },
+        {
+          path: 'actualizar-producto',
+          name: 'ActualizarProd',
+          component: VendedorActualizar
         },
       ]
     }
