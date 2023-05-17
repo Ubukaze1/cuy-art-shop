@@ -14,33 +14,81 @@
           <h2 class="dee">Descripciòn</h2>
         </div>
         <div class="rightcenter">
-          <input type="text">
-          <input type="text">
-          <input type="text">
+          <input type="text" v-model="nomProducto" />
+          <input type="text" v-model="preProducto" />
+          <input type="text" v-model="stockProducto" />
           <div class="añaimg">
-            <img src="../../../assets/articulos/cuy.jpeg" alt="Es un cuy">
+            <img src="../../../assets/articulos/cuy.jpeg" alt="Es un cuy" />
             <button>añadir</button>
           </div>
-          <textarea></textarea>
+          <textarea v-model="desProducto"></textarea>
         </div>
       </div>
       <div class="bt">
-        <button class="bt-add">Añadir</button>
+        <button class="bt-add" @click="añadir">Añadir</button>
         <button class="bt-can">Cancelar</button>
       </div>
     </div>
     <div class="right">
       <div class="rightop">
         <div class="imgprof">
-          <img src="../../../assets/person.svg" alt="Persona">
+          <img src="../../../assets/person.svg" alt="Persona" />
         </div>
-        <h1>Nombre :V</h1>
+        <h1>{{ name }}</h1>
       </div>
     </div>
   </main>
 </template>
 
 <script lang="ts" setup>
+import { ref, type Ref } from "vue";
+import { getAuth } from "firebase/auth";
+import { useRegistroStore } from "../../../store/registro";
+import { updateDoc, doc } from "firebase/firestore";
+import { db } from "../../../Firebase/Fire";
+
+const reg = useRegistroStore();
+const user = getAuth().currentUser;
+
+const name: Ref<string> = ref(
+  reg.getRegistro(user?.email?.toString() || "")?.nombre || ""
+);
+const correo: Ref<string> = ref(
+  reg.getRegistro(user?.email?.toString() || "")?.correo || ""
+);
+
+const productos = reg.getRegistro(user?.email?.toString() || "")?.productos || [];
+
+const nomProducto: Ref<string> = ref("");
+const preProducto: Ref<string> = ref("");
+const stockProducto: Ref<number> = ref(0);
+const imgProducto: Ref<string> = ref("");
+const desProducto: Ref<string> = ref("");
+
+const añadir = async () => {
+
+  const img: Array<string> = [imgProducto.value.toString()]
+
+  const prod = {
+    nombre: nomProducto.value.toString(),
+    precio: preProducto.value.toString(),
+    stock: stockProducto.value,
+    img: img,
+    desc: desProducto.value.toString(),
+  };
+
+  productos.push(prod);
+
+  await updateDoc(doc(db, "usuarios", correo.value || ""), {
+    productos: productos,
+  })
+    .then(() => {
+      console.log("documento actualizado");
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -92,7 +140,6 @@
         .dee {
           margin-top: 240px;
         }
-
       }
 
       .rightcenter {
@@ -140,10 +187,7 @@
           box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.75);
           border: none;
         }
-
-
       }
-
     }
 
     .bt {
@@ -178,12 +222,8 @@
         box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.75);
         cursor: pointer;
       }
-
-
     }
-
   }
-
 
   .right {
     display: flex;
@@ -203,7 +243,6 @@
 
       h1 {
         font-size: 1.5rem;
-        font-weight: 500;
         margin: 0px;
       }
 

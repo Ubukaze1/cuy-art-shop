@@ -37,13 +37,27 @@
         <div class="imgprof">
           <img src="../../../assets/person.svg" alt="Persona">
         </div>
-        <h1>Nombre :V</h1>
+        <h1>{{name}}</h1>
       </div>
     </div>
   </main>
 </template>
 
 <script lang="ts" setup>
+import { ref, type Ref } from "vue";
+import { getAuth } from 'firebase/auth'
+import { useRegistroStore, type InProd} from '../../../store/registro'
+
+const reg = useRegistroStore()
+const user = getAuth().currentUser
+
+const name: Ref<string> = ref( reg.getRegistro(user?.email?.toString() || '')?.nombre || '');
+
+const ob: Array<InProd>  = reg.getRegistro(user?.email?.toString() || '')?.productos || ''
+
+
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -156,7 +170,6 @@
 
       h1 {
         font-size: 1.5rem;
-        font-weight: 500;
         margin: 0px;
       }
 
