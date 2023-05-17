@@ -313,11 +313,11 @@ const actual = async () => {
     }
 
     .bt-act {
-      background-color: #42ae53;
+      background-color: #5d61c6;
     }
 
     .bt-can {
-      background-color: #fe4e26;
+      background-color: red;
     }
 
   }

@@ -84,6 +84,7 @@
       width: 900px;
       height: 750px;
       background-color: #cfcfcf;
+      box-shadow: -1px -1px 10px 0px rgba(0, 0, 0, 0.75);
 
       .pp {
         margin-top: 30px;

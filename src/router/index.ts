@@ -10,6 +10,8 @@ import VendedorMain from '@/components/MiCuenta/Vendedor/VendedorMain.vue'
 import VendedorAñadir from '@/components/MiCuenta/Vendedor/VendedorAñadir.vue'
 import VendedorActualizar from '@/components/MiCuenta/Vendedor/VendedorActualizar.vue'
 import CarroPage from '@/components/Carro/CarroPage.vue'
+import PaginaProducto from '@/components/Producto/PaginaProducto.vue'
+import CarroCompra from '@/components/Carro/CarroCompra.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,7 +72,17 @@ const router = createRouter({
       path: '/carrito',
       name: 'Carrito',
       component: CarroPage,
-    }
+    },
+    {
+      path: '/producto',
+      name: 'Producto',
+      component: PaginaProducto,
+    },
+    {
+      path: '/compra',
+      name: 'Compra',
+      component: CarroCompra,
+    },
   ]
 })
 

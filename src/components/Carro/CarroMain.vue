@@ -30,10 +30,31 @@
     </div>
     <div class="right">
       <div class="rightop">
-        <div class="imgprof">
-          <img src="../../assets/person.svg" alt="Persona">
+        <div class="top">
+          <h1>Carrito de Compra</h1>
+          <div class="linea"></div>
         </div>
-        <h1>Nombre :V</h1>
+        <div class="valor">
+          <div>
+            <h2>Precio</h2>
+            <h3>$ 50.000</h3>
+          </div>
+          <div>
+            <h2>Descuento de la oferta</h2>
+            <h3>$ 0.0</h3>
+          </div>
+          <div>
+            <h2>Envìo</h2>
+            <h3>$ 10.000</h3>
+          </div>
+          <div>
+            <h2>Subtotal</h2>
+            <h3>$ 60.000</h3>
+          </div>
+          <div class="bt">
+            <button class="bt-comp">Comprar</button>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -54,24 +75,6 @@
     display: flex;
     flex-direction: column;
 
-    .top {
-      display: flex;
-      flex-direction: column;
-      justify-content: left;
-      margin-bottom: 20px;
-
-      h1 {
-        font-size: 2rem;
-        font-weight: 500;
-        margin: 0px;
-      }
-
-      .linea {
-        width: 50%;
-        height: 2px;
-        background-color: #000;
-      }
-    }
 
     .center {
       display: flex;
@@ -81,6 +84,7 @@
       width: 900px;
       height: 750px;
       background-color: #cfcfcf;
+      box-shadow: -1px -1px 10px 0px rgba(0, 0, 0, 0.75);
 
       .pp {
         margin-top: 30px;
@@ -135,42 +139,87 @@
   }
 
   .right {
-    margin-left: 90px;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    width: 300px;
+    width: 400px;
     height: 100%;
+
     .rightop {
       display: flex;
       flex-direction: column;
       justify-content: start;
       align-items: center;
       width: 100%;
+      height: 100%;
       margin-bottom: 20px;
 
-      h1 {
-        font-size: 1.5rem;
-        font-weight: 500;
-        margin: 0px;
+
+      .top {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        margin-bottom: 20px;
+
+        h1 {
+          font-size: 3rem;
+          font-weight: bold;
+          margin: 0px;
+        }
+
+        .linea {
+          width: 100%;
+          height: 2px;
+          background-color: #000;
+        }
       }
 
-    .imgprof {
-      margin-top: 25px;
-      padding: 10px 10px;
-      border-radius: 50%;
-      display: flex;
-      background-color: #5d61c6;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 10px;
-      box-shadow: -15px -15px 5px 5px rgba(188, 194, 216, 0.75);
+      .valor {
+        margin-top: 70px;
+        width: 110%;
+        height: 65%;
+        background-color: #9ad496;
+        display: flex;
+        flex-direction: column;
+        flex-direction: left;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 
-      img {
-        width: 200px;
+        div {
+          margin-top: 30px;
+          margin-left: 40px;
+          margin-bottom: 25px;
+
+          h2 {
+            margin: 0px;
+          }
+
+          h3 {
+            margin: 0px;
+          }
+        }
+
+        .bt {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 30px;
+          margin-left: 40px;
+          margin-bottom: 25px;
+
+          button {
+            width: 100px;
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+            background-color: #000;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+          }
+        }
       }
-    }
     }
   }
 }
