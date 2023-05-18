@@ -7,7 +7,7 @@
       </div>
       <div class="center">
         <div class="pp" v-for="(o, i) of ob" :key="o.desc">
-          <img src="../../../assets/articulos/cuy.jpeg" alt="Un Cuy">
+          <img :src="o.img[0]" alt="Un Cuy">
           <div class="produc">
             <div class="desc">
               <p>{{o.nombre}}</p>

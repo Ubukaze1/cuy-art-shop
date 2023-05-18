@@ -49,7 +49,7 @@ import { ref, type Ref } from "vue";
 import { getAuth } from "firebase/auth";
 import { useRegistroStore } from "../../../store/registro";
 import { updateDoc, doc } from "firebase/firestore";
-import { db } from "../../../Firebase/Fire";
+import { db, uploadFile } from "../../../Firebase/Fire";
 
 const reg = useRegistroStore();
 const user = getAuth().currentUser;
@@ -66,20 +66,24 @@ const productos = reg.getRegistro(user?.email?.toString() || "")?.productos || [
 const nomProducto: Ref<string> = ref("");
 const preProducto: Ref<string> = ref("");
 const stockProducto: Ref<number> = ref(0);
-const imgProducto: Ref<string> = ref("");
 let imgg: Ref<Array<string>> = ref([]);
 const desProducto: Ref<string> = ref("");
 
-const subir = (e: any) => {
+const subir = async (e: any) => {
+
+  
+  const url = await uploadFile(e.target.files[0], correo.value || "");
+
   console.log(e.target.files[0]);
   const filereader = new FileReader();
   filereader.readAsDataURL(e.target.files[0]);
   if (imgg.value.length < 3) {
     filereader.onload = (e: any) => {
-      imgProducto.value = e.target.result;
-      imgg.value.push(e.target.result);
+      imgg.value.push(url);
     };
   }
+
+  console.log("URL: ", url)
 }
 
 const ele = (el: string) => {
@@ -88,13 +92,11 @@ const ele = (el: string) => {
 
 const añadir = async () => {
 
-  const img: Array<string> = [imgProducto.value.toString()]
-
   const prod = {
     nombre: nomProducto.value.toString(),
     precio: preProducto.value.toString(),
     stock: stockProducto.value,
-    img: img,
+    img: imgg.value,
     desc: desProducto.value.toString(),
   };
 

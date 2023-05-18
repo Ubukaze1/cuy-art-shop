@@ -17,10 +17,13 @@
           <input type="text" v-model="nomProducto" />
           <input type="text" v-model="preProducto" />
           <input type="text" v-model="stockProducto" />
-          <div class="añaimg">
-            <img src="../../../assets/articulos/cuy.jpeg" alt="Es un cuy" />
-            <label for="file">Añadir</label>
-            <input type="file" name="file" id="file">
+          <div class="anaimg">
+            <div v-for="(im, i) of imgg" class="ii">
+              <img :src="im" alt="Es un cuy" />
+              <label class="bor" @click="ele(im)">x</label>
+            </div>
+            <label for="file" class="add">Añadir</label>
+            <input type="file" name="file" id="file" @change="subir($event)">
           </div>
           <textarea v-model="desProducto"></textarea>
         </div>
@@ -51,6 +54,22 @@ import { db } from "../../../Firebase/Fire";
 const reg = useRegistroStore();
 const user = getAuth().currentUser;
 
+const subir = (e: any) => {
+  console.log(e.target.files[0]);
+  const filereader = new FileReader();
+  filereader.readAsDataURL(e.target.files[0]);
+  if (imgg.value.length < 3) {
+    filereader.onload = (e: any) => {
+      imgg.value.push(e.target.result);
+    };
+  }
+}
+
+const ele = (el: string) => {
+  imgg.value = imgg.value.filter(im => !(im = el))
+}
+
+
 const name: Ref<string> = ref(
   reg.getRegistro(user?.email?.toString() || "")?.nombre || ""
 );
@@ -63,18 +82,17 @@ const productos = reg.getRegistro(user?.email?.toString() || "")?.productos || [
 const nomProducto: Ref<string> = ref("");
 const preProducto: Ref<string> = ref("");
 const stockProducto: Ref<number> = ref(0);
-const imgProducto: Ref<string> = ref("");
+let imgg: Ref<Array<string>> = ref([]);
 const desProducto: Ref<string> = ref("");
 
 const actuali = async () => {
 
-  const img: Array<string> = [imgProducto.value.toString()]
 
   const prod = {
     nombre: nomProducto.value.toString(),
     precio: preProducto.value.toString(),
     stock: stockProducto.value,
-    img: img,
+    img: imgg.value,
     desc: desProducto.value.toString(),
   };
 
@@ -160,23 +178,42 @@ const actuali = async () => {
           border-radius: 50px;
         }
 
-        .añaimg {
+        .anaimg {
           display: flex;
           margin-bottom: 28px;
 
-          img {
-            border: solid white 5px;
-            border-radius: 10px;
+          .ii {
+            display: flex;
             width: 250px;
-            height: 250px;
+            height: 200px;
+
+            img {
+              border: solid white 5px;
+              border-radius: 10px;
+              width: 100%;
+              height: 100%;
+            }
+
+            .bor {
+              margin-top: 8px;
+              background-color: #000;
+              color: white;
+              width: 20px;
+              height: 20px;
+              padding: 0px 5px 5px 5px;
+              text-align: center;
+              align-items: center;
+              position: relative;
+              right: 35px;
+            }
           }
+
 
           input[type="file"] {
             display: none;
           }
 
-          label {
-            margin-left: 20px;
+          .add {
             text-align: center;
             width: 75px;
             height: 25px;
