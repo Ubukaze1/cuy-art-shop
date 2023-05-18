@@ -15,11 +15,12 @@
         </div>
         <div class="rightcenter">
           <input type="text" v-model="nomProducto" />
-          <input type="text" v-model="preProducto"/>
-          <input type="text" v-model="stockProducto"/>
+          <input type="text" v-model="preProducto" />
+          <input type="text" v-model="stockProducto" />
           <div class="añaimg">
             <img src="../../../assets/articulos/cuy.jpeg" alt="Es un cuy" />
-            <button>añadir</button>
+            <label for="file">Añadir</label>
+            <input type="file" name="file" id="file">
           </div>
           <textarea v-model="desProducto"></textarea>
         </div>
@@ -170,7 +171,13 @@ const actuali = async () => {
             height: 250px;
           }
 
-          button {
+          input[type="file"] {
+            display: none;
+          }
+
+          label {
+            margin-left: 20px;
+            text-align: center;
             width: 75px;
             height: 25px;
             border: none;

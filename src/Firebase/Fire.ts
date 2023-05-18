@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {getFirestore} from 'firebase/firestore'
-import {getStorage} from 'firebase/storage'
+import {getStorage, ref, uploadBytes} from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCs4ob0qjeLAxY1Nr-dIXiwXxnqkeyBGc8",
@@ -13,5 +13,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
+const storage = getStorage(app)
 
 export {db, app}
+
+/* function uploadFile(file) {
+  const storageRef = ref(storage, 'images/' + file.name);
+  const uploadTask = uploadBytes(storageRef, file);
+
+}
+ */

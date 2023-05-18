@@ -6,24 +6,12 @@
         <div class="linea"></div>
       </div>
       <div class="center">
-        <div class="pp">
+        <div class="pp" v-for="(o, i) of ob" :key="o.desc">
           <img src="../../../assets/articulos/cuy.jpeg" alt="Un Cuy">
           <div class="produc">
             <div class="desc">
-              <p>Figura Cuy - Graduado</p>
-              <p>(Producto Nariñense decorado a mano)</p>
-            </div>
-            <div>
-              <button>eliminar</button>
-            </div>
-          </div>
-        </div>
-        <div class="pp">
-          <img src="../../../assets/articulos/cuy.jpeg" alt="Un Cuy">
-          <div class="produc">
-            <div class="desc">
-              <p>Figura Cuy - Graduado</p>
-              <p>(Producto Nariñense decorado a mano)</p>
+              <p>{{o.nombre}}</p>
+              <p>{{o.desc}}</p>
             </div>
             <div>
               <button>eliminar</button>
@@ -53,7 +41,9 @@ const user = getAuth().currentUser
 
 const name: Ref<string> = ref( reg.getRegistro(user?.email?.toString() || '')?.nombre || '');
 
-const ob: Array<InProd>  = reg.getRegistro(user?.email?.toString() || '')?.productos || ''
+const ob: Array<InProd>  = reg.getRegistro(user?.email?.toString() || '')?.productos || [] 
+
+console.log(ob)
 
 
 
