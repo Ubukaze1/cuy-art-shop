@@ -14,7 +14,8 @@
               <p>{{o.desc}}</p>
             </div>
             <div>
-              <button>eliminar</button>
+              <button @click="sett(i)" ><img src="../../../assets/settings.svg" alt="settings"> </button>
+              <button><img src="../../../assets/delete.svg" alt="Delete"> </button>
             </div>
           </div>
         </div>
@@ -33,17 +34,28 @@
 
 <script lang="ts" setup>
 import { ref, type Ref } from "vue";
+import {useRouter} from 'vue-router'
 import { getAuth } from 'firebase/auth'
-import { useRegistroStore, type InProd} from '../../../store/registro'
+import { useRegistroStore, type InProd, seti } from '../../../store/registro'
+
+const emit = defineEmits(['cambio'])
 
 const reg = useRegistroStore()
 const user = getAuth().currentUser
+const router = useRouter()
 
 const name: Ref<string> = ref( reg.getRegistro(user?.email?.toString() || '')?.nombre || '');
 
 const ob: Array<InProd>  = reg.getRegistro(user?.email?.toString() || '')?.productos || [] 
 
 console.log(ob)
+
+const sett =(i: number) => {
+  console.log("este es el numero"+i)
+  router.push({name: 'ActualizarProd',})
+  emit('cambio')
+  seti(i)
+}
 
 
 
@@ -127,16 +139,19 @@ console.log(ob)
         }
 
         button {
-          width: 100px;
+          width: 35px;
           height: 30px;
-          margin-right: 20px;
+          margin-right: 10px;
           border: none;
           border-radius: 5px;
-          background-color: #000;
           color: #fff;
           font-size: 1rem;
           font-weight: 500;
           cursor: pointer;
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }

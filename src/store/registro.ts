@@ -2,6 +2,17 @@ import { defineStore } from "pinia";
 import { db } from "../Firebase/Fire";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
+let i = 0
+let b = true
+
+export const seti = (a:number) => {
+  i = a
+}
+
+export const geti = () => {return i}	
+
+
+
 export interface InProd {
   nombre: string;
   precio:string;

@@ -31,7 +31,7 @@
               <div class="linea5" v-show="opc" :class="opcselc1 ? 'rot' : ''"></div>
               <div class="lineaa5" v-show="opcselc1"></div>
             </div>
-            <label v-show="opc" @click="centopc11">Actualizar Producto</label>
+            <label v-show="opc">Actualizar Producto</label>
           </div>
         </div>
         <div class="linea"></div>
@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="mainright">
-      <RouterView />
+      <RouterView @cambio="centopc11"/>
     </div>
   </main>
 </template>

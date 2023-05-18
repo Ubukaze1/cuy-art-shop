@@ -30,7 +30,7 @@
       </div>
       <div class="bt">
         <button class="bt-add" @click="añadir">Añadir</button>
-        <button class="bt-can">Cancelar</button>
+        <button class="bt-can" @click="volver()">Cancelar</button>
       </div>
     </div>
     <div class="right">
@@ -46,10 +46,17 @@
 
 <script lang="ts" setup>
 import { ref, type Ref } from "vue";
+import { useRouter } from "vue-router";
 import { getAuth } from "firebase/auth";
 import { useRegistroStore } from "../../../store/registro";
 import { updateDoc, doc } from "firebase/firestore";
 import { db, uploadFile } from "../../../Firebase/Fire";
+
+const router = useRouter();
+
+const volver = () => {
+  router.push({ name: "Vendedor" });
+}
 
 const reg = useRegistroStore();
 const user = getAuth().currentUser;

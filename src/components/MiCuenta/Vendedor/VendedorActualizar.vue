@@ -30,7 +30,7 @@
       </div>
       <div class="bt">
         <button class="bt-add" @click="actuali">Actualizar</button>
-        <button class="bt-can">Cancelar</button>
+        <button class="bt-can" @click="volver()">Cancelar</button>
       </div>
     </div>
     <div class="right">
@@ -45,14 +45,43 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref } from "vue";
-import { getAuth } from "firebase/auth";
-import { useRegistroStore } from "../../../store/registro";
+import { ref, type Ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { getAuth, reload } from "firebase/auth";
+import { useRegistroStore, geti } from "../../../store/registro";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../../../Firebase/Fire";
 
 const reg = useRegistroStore();
 const user = getAuth().currentUser;
+const router = useRouter();
+
+const volver = () => {
+  router.push({ name: "Vendedor" });
+}
+
+
+onMounted(() => {
+
+
+  const reg = useRegistroStore();
+  const user = getAuth().currentUser;
+  console.log(geti())
+
+  nomProducto.value = ''
+  preProducto.value = ''
+  stockProducto.value = 0
+  imgg.value = []
+  desProducto.value = ''
+
+  nomProducto.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].nombre || "";
+  preProducto.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].precio || "";
+  stockProducto.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].stock || 0;
+  imgg.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].img || [];
+  desProducto.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].desc || "";
+
+
+})
 
 const subir = (e: any) => {
   console.log(e.target.files[0]);
@@ -96,7 +125,7 @@ const actuali = async () => {
     desc: desProducto.value.toString(),
   };
 
-  productos.push(prod);
+  productos.splice(geti(), 1, prod);
 
   await updateDoc(doc(db, "usuarios", correo.value || ""), {
     productos: productos,
@@ -108,6 +137,7 @@ const actuali = async () => {
       console.error("Error adding document: ", error);
     });
 }
+
 
 </script>
 
