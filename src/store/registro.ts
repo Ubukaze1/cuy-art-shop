@@ -28,6 +28,7 @@ interface RegistroState {
   telefono: string;
   direccion: string;
   productos: Array<InProd>;
+  tipo: string;
   uso: boolean;
 }
 
@@ -47,6 +48,7 @@ export const useRegistroStore = defineStore("registro", {
           img: [" "],
           desc: "Descripcion del producto 1"
         }],
+        tipo: "Barro",
         uso: true,
       },
     ],
@@ -94,6 +96,7 @@ export const useRegistroStore = defineStore("registro", {
             telefono: doc.data().telefono,
             direccion: doc.data().direccion,
             productos: doc.data().productos,
+            tipo: doc.data().tipo,
             uso: doc.data().uso,
           };
           this.addRegistro(reg);
@@ -102,6 +105,15 @@ export const useRegistroStore = defineStore("registro", {
     },
     clearAll() {
       this.datos = [];
+    },
+    getAllProductos(): Array<InProd> {
+      let productos = [];
+      for (let i = 0; i < this.datos.length; i++) {
+        for (let j = 0; j < this.datos[i].productos.length; j++) {
+          productos.push(this.datos[i].productos[j]);
+        }
+      }
+      return productos;
     }
   },
   persist: true,

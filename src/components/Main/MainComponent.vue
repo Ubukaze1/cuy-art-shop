@@ -5,21 +5,21 @@
         <div class="categorias">
           <h2>Catergorias</h2>
           <div class="linea"></div>
-          <form>
+          <form @change="cc">
             <div>
-              <input type="checkbox" name="tipo1" id="tipo1">
+              <input type="radio" name="tipo1" id="tipo1" value="Ceràmica" v-model="tipo">
               <label for="tipo1">Ceràmica</label>
             </div>
             <div>
-              <input type="checkbox" name="tipo2" id="tipo2">
+              <input type="radio" name="tipo2" id="tipo2" value="Barro" v-model="tipo">
               <label for="tipo2">Barro</label>
             </div>
             <div>
-              <input type="checkbox" name="tipo3" id="tipo3">
+              <input type="radio" name="tipo3" id="tipo3" value="Tela" v-model="tipo">
               <label for="tipo3">Tela</label>
             </div>
             <div>
-              <input type="checkbox" name="tipo4" id="tipo4">
+              <input type="radio" name="tipo4" id="tipo4" value="Acuarela" v-model="tipo">
               <label for="tipo4">Acuarela</label>
             </div>
           </form>
@@ -43,39 +43,16 @@
       </div>
     </div>
     <div class="mainright">
-      <div class="promocion">
-        <img src="../../assets/prom.jpg" alt="promocion">
-      </div>
       <div class="targetas">
-        <div class="targeta">
-          <img src="../../assets/articulos/09757-BIG.jpg" alt="Primer Articulo">
+        <div class="targeta" v-for="(ob, i) of productos" :key="i">
+          <img :src="ob.img[0]" alt="Primer Articulo">
           <div class="linea"></div>
-          <h2>Vandola de Cafe</h2>
+          <h2>{{ ob.nombre }}</h2>
           <div class="price">
-            <p>$ 45.000</p>
+            <p>$ {{ ob.precio }}</p>
             <div class="lineap"></div>
           </div>
-          <p>Ha, Pero que lindo</p>
-        </div>
-        <div class="targeta">
-          <img src="../../assets/articulos/taza-tradicional.webp" alt="Segundo Articulo">
-          <div class="linea"></div>
-          <h2>Taza personalizada de Ceramìca</h2>
-          <div class="price">
-            <p>$ 25.000</p>
-            <div class="lineap"></div>
-          </div>
-          <p>Producto Tolimence, para tomar cafesito</p>
-        </div>
-        <div class="targeta">
-          <img src="../../assets/articulos/9a0e8b4110eb49644003a6d56f7b1232.jpg" alt="Tercer Articulo">
-          <div class="linea"></div>
-          <h2>Calletero :v</h2>
-          <div class="price">
-            <p>$ 40.000</p>
-            <div class="lineap"></div>
-          </div>
-          <p>Para Guardar tus deliciosas Galletas</p>
+          <p class="po">{{ ob.desc }}</p>
         </div>
       </div>
     </div>
@@ -83,18 +60,31 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref, onBeforeMount } from 'vue'
-import { useRegistroStore } from '../../store/registro'
+import { ref, type Ref, onBeforeMount, onUnmounted, } from 'vue'
+import { useRegistroStore, type InProd } from '../../store/registro'
 
 const reg = useRegistroStore()
 const num: Ref<number> = ref(20000)
+const tipo: Ref<string> = ref('')
 
+let productos: Array<InProd> = [];
 
-onBeforeMount(async() => {
+for (let i = 0; i < reg.datos.length; i++) {
+  for (let j = 0; j < reg.datos[i].productos.length; j++) {
+    productos.push(reg.datos[i].productos[j]);
+  }
+}
+console.log(productos)
+
+const cc = () => {
+  console.log(tipo.value)
+}
+
+onUnmounted(async () => {
   reg.clearAll()
   await reg.setAll()
-  reg.getAll()
 })
+
 
 </script>
 
@@ -292,31 +282,25 @@ onBeforeMount(async() => {
 
   .mainright {
     width: 70%;
-    height: 100%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
 
-    .promocion {
-      margin-top: 40px;
-      margin-right: 200px;
-
-      img {
-        width: 1000px;
-        height: 200px;
-      }
-    }
 
     .targetas {
-      display: flex;
+      display: grid;
       justify-content: space-evenly;
+      grid-template-columns: auto auto auto;
       margin-right: 150px;
+      overflow: auto;
+      width: 100%;
+      row-gap: 15px;
 
       .targeta {
-        margin-right: 50px;
         width: 300px;
-        height: 500px;
+        height: 430px;
         border: thin solid black;
         background-color: white;
         display: flex;
@@ -337,29 +321,38 @@ onBeforeMount(async() => {
         }
 
         h2 {
-          width: 75%;
+          text-align: center;
+          width: 100%;
           height: 10%;
           margin: 0px;
           margin-top: 10px;
+          margin-bottom: 20px;
         }
 
         .price {
           display: flex;
           flex-direction: column;
-          width: 100%;
-          margin-left: 75px;
+          width: 80%;
+
 
           p {
-            width: 75%;
+            width: 70%;
             font-size: 34px;
+            margin-top: 0px;
             margin-bottom: 0px;
           }
 
+
           .lineap {
-            width: 50%;
+            width: 70%;
             height: 1px;
             background-color: gray;
           }
+        }
+
+        .po {
+          text-align: center;
+
         }
 
         p {

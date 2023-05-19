@@ -10,6 +10,7 @@
           <h2>Nombre del Producto</h2>
           <h2>Precio del producto</h2>
           <h2>Stock del Producto</h2>
+          <h2>Categorias</h2>
           <h2>Imàgenes del producto</h2>
           <h2 class="dee">Descripciòn</h2>
         </div>
@@ -17,6 +18,24 @@
           <input type="text" v-model="nomProducto" />
           <input type="text" v-model="preProducto" />
           <input type="text" v-model="stockProducto" />
+          <div class="cat">
+            <div>
+              <input type="radio" name="tipo" id="tipo1" class="check" value="Ceràmica" v-model="tipo">
+              <label for="tipo1" class="che">Ceràmica</label>
+            </div>
+            <div>
+              <input type="radio" name="tipo" id="tipo2" class="check" value="Barro" v-model="tipo">
+              <label for="tipo2" class="che">Barro</label>
+            </div>
+            <div>
+              <input type="radio" name="tipo" id="tipo3" class="check" value="Tela" v-model="tipo">
+              <label for="tipo3" class="che">Tela</label>
+            </div>
+            <div>
+              <input type="radio" name="tipo" id="tipo4" class="check" value="Acuarela" v-model="tipo">
+              <label for="tipo4" class="che">Acuarela</label>
+            </div>
+          </div>
           <div class="anaimg">
             <div v-for="(im, i) of imgg" class="ii">
               <img :src="im" alt="Es un cuy" />
@@ -73,12 +92,14 @@ onMounted(() => {
   stockProducto.value = 0
   imgg.value = []
   desProducto.value = ''
+  tipo.value = ''
 
   nomProducto.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].nombre || "";
   preProducto.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].precio || "";
   stockProducto.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].stock || 0;
   imgg.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].img || [];
   desProducto.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].desc || "";
+  tipo.value = reg.getRegistro(user?.email?.toString() || "")?.productos[geti()].tipo || "";
 
 
 })
@@ -113,6 +134,7 @@ const preProducto: Ref<string> = ref("");
 const stockProducto: Ref<number> = ref(0);
 let imgg: Ref<Array<string>> = ref([]);
 const desProducto: Ref<string> = ref("");
+const tipo: Ref<string> = ref("");
 
 const actuali = async () => {
 
@@ -123,6 +145,7 @@ const actuali = async () => {
     stock: stockProducto.value,
     img: imgg.value,
     desc: desProducto.value.toString(),
+    tipo: tipo.value.toString(),
   };
 
   productos.splice(geti(), 1, prod);
@@ -198,6 +221,25 @@ const actuali = async () => {
         display: flex;
         flex-direction: column;
 
+        .cat {
+          display: flex;
+          align-items: center;
+          margin-bottom: 25px;
+
+          .check {
+            margin-right: 20px;
+            width: 20px;
+            height: 20px;
+            box-shadow: none;
+          }
+          .che {
+            margin-right: 30px;
+            text-align: center;
+            font-size: 18px;
+
+          }
+
+        }
         input {
           font-size: 20px;
           padding: 10px 300px 10px 10px;
@@ -220,8 +262,8 @@ const actuali = async () => {
             img {
               border: solid white 5px;
               border-radius: 10px;
-              width: 100%;
-              height: 100%;
+              width: 250px;
+              height: 200px;
             }
 
             .bor {
@@ -244,6 +286,7 @@ const actuali = async () => {
           }
 
           .add {
+            margin-left: 3%;
             text-align: center;
             width: 75px;
             height: 25px;
