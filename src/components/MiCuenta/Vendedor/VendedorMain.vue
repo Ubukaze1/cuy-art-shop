@@ -10,12 +10,12 @@
           <img :src="o.img[0]" alt="Un Cuy">
           <div class="produc">
             <div class="desc">
-              <p>{{o.nombre}}</p>
-              <p>{{o.desc}}</p>
+              <p>{{ o.nombre }}</p>
+              <p>{{ o.desc }}</p>
             </div>
             <div>
-              <button @click="sett(i)" ><img src="../../../assets/settings.svg" alt="settings"> </button>
-              <button><img src="../../../assets/delete.svg" alt="Delete"> </button>
+              <button @click="sett(i)"><img src="../../../assets/settings.svg" alt="settings"> </button>
+              <button @click="eliminar(i)"><img src="../../../assets/delete.svg" alt="Delete"> </button>
             </div>
           </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="imgprof">
           <img src="../../../assets/person.svg" alt="Persona">
         </div>
-        <h1>{{name}}</h1>
+        <h1>{{ name }}</h1>
       </div>
     </div>
   </main>
@@ -34,8 +34,10 @@
 
 <script lang="ts" setup>
 import { ref, type Ref } from "vue";
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 import { getAuth } from 'firebase/auth'
+import { updateDoc, doc } from 'firebase/firestore'
+import { db } from '../../../Firebase/Fire'
 import { useRegistroStore, type InProd, seti } from '../../../store/registro'
 
 const emit = defineEmits(['cambio'])
@@ -44,17 +46,36 @@ const reg = useRegistroStore()
 const user = getAuth().currentUser
 const router = useRouter()
 
-const name: Ref<string> = ref( reg.getRegistro(user?.email?.toString() || '')?.nombre || '');
+const name: Ref<string> = ref(reg.getRegistro(user?.email?.toString() || '')?.nombre || '');
 
-const ob: Array<InProd>  = reg.getRegistro(user?.email?.toString() || '')?.productos || [] 
+const corre = reg.getRegistro(user?.email?.toString() || '')?.correo || ''
+
+const ob: Array<InProd> = reg.getRegistro(user?.email?.toString() || '')?.productos || []
 
 console.log(ob)
 
-const sett =(i: number) => {
-  console.log("este es el numero"+i)
-  router.push({name: 'ActualizarProd',})
+const sett = (i: number) => {
+  console.log("este es el numero" + i)
+  router.push({ name: 'ActualizarProd', })
   emit('cambio')
   seti(i)
+}
+
+const eliminar = async (i: number) => {
+  ob.splice(i, 1)
+  try {
+    await updateDoc(doc(db, "usuarios", corre || ''), {
+      productos: ob
+    }).then(() => {
+      console.log("documento creado")
+    }).catch((error) => {
+      console.log("error al crear el documento")
+      return
+    });
+
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 
@@ -148,6 +169,7 @@ const sett =(i: number) => {
           font-size: 1rem;
           font-weight: 500;
           cursor: pointer;
+
           img {
             width: 100%;
             height: 100%;
@@ -165,6 +187,7 @@ const sett =(i: number) => {
     align-items: center;
     width: 300px;
     height: 100%;
+
     .rightop {
       display: flex;
       flex-direction: column;
@@ -178,21 +201,21 @@ const sett =(i: number) => {
         margin: 0px;
       }
 
-    .imgprof {
-      margin-top: 25px;
-      padding: 10px 10px;
-      border-radius: 50%;
-      display: flex;
-      background-color: #5d61c6;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 10px;
-      box-shadow: -15px -15px 5px 5px rgba(188, 194, 216, 0.75);
+      .imgprof {
+        margin-top: 25px;
+        padding: 10px 10px;
+        border-radius: 50%;
+        display: flex;
+        background-color: #5d61c6;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+        box-shadow: -15px -15px 5px 5px rgba(188, 194, 216, 0.75);
 
-      img {
-        width: 200px;
+        img {
+          width: 200px;
+        }
       }
-    }
     }
   }
 }

@@ -2,23 +2,24 @@ import { defineStore } from "pinia";
 import { db } from "../Firebase/Fire";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
-let i = 0
-let b = true
+let i = 0;
+let b = true;
 
-export const seti = (a:number) => {
-  i = a
-}
+export const seti = (a: number) => {
+  i = a;
+};
 
-export const geti = () => {return i}	
-
-
+export const geti = () => {
+  return i;
+};
 
 export interface InProd {
   nombre: string;
-  precio:string;
+  precio: string;
   stock: number;
   img: Array<string>;
-  desc:string;
+  desc: string;
+  tipo: string;
 }
 
 interface RegistroState {
@@ -28,7 +29,6 @@ interface RegistroState {
   telefono: string;
   direccion: string;
   productos: Array<InProd>;
-  tipo: string;
   uso: boolean;
 }
 
@@ -41,14 +41,16 @@ export const useRegistroStore = defineStore("registro", {
         password: "123456",
         telefono: "1234567890",
         direccion: "Calle 123",
-        productos: [{
-          nombre: "Producto 1",
-          precio: "100",
-          stock: 10,
-          img: [" "],
-          desc: "Descripcion del producto 1"
-        }],
-        tipo: "Barro",
+        productos: [
+          {
+            nombre: "Producto 1",
+            precio: "100",
+            stock: 10,
+            img: [" "],
+            desc: "Descripcion del producto 2",
+            tipo: "Barro",
+          },
+        ],
         uso: true,
       },
     ],
@@ -96,7 +98,6 @@ export const useRegistroStore = defineStore("registro", {
             telefono: doc.data().telefono,
             direccion: doc.data().direccion,
             productos: doc.data().productos,
-            tipo: doc.data().tipo,
             uso: doc.data().uso,
           };
           this.addRegistro(reg);
@@ -114,7 +115,7 @@ export const useRegistroStore = defineStore("registro", {
         }
       }
       return productos;
-    }
+    },
   },
   persist: true,
 });
