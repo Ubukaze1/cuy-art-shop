@@ -16,6 +16,7 @@ import { getAuth, signOut } from 'firebase/auth'
 const router = useRouter()
 const home = async () => {
   await signOut(getAuth())
+  alert('Sesion Cerrada')
   router.push('/')
 }
 

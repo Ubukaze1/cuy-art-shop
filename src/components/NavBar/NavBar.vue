@@ -64,6 +64,11 @@ const home = () => {
 }
 
 const carro = () => {
+  if (getAuth().currentUser == null) {
+    router.push("/login");
+    return;
+  }
+
   router.push({name: 'Carrito'})
   console.log("Carroo")
 }

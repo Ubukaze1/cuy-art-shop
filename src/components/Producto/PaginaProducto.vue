@@ -89,6 +89,11 @@ for (let i = 0; i < reg.datos.length; i++) {
 }
 
 const add = async () => {
+  if (user == null) {
+    routerr.push({ name: 'Login' })
+    return
+  }
+
   const prod = {
     nombre: nombre.value.toString(),
     precio: precio.value.toString(),
