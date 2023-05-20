@@ -78,6 +78,9 @@ for (let i = 0; i < reg.datos.length; i++) {
     continue;
   }
   for (let j = 0; j < reg.datos[i].productos.length; j++) {
+    if (reg.datos[i].productos[j].stock == 0) {
+      continue;
+    }
     productos.push(reg.datos[i].productos[j]);
     filtro.push(reg.datos[i].productos[j]);
   }

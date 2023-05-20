@@ -23,44 +23,28 @@
             <input type="text" name="cv" id="cv">
           </div>
           <div class="bt">
-            <button class="bt-comp">Comprar</button>
+            <button class="bt-comp" @click="fin">Comprar</button>
             <button class="bt-can">Cancelar</button>
           </div>
         </div>
       </div>
       <div class="right">
         <div class="rightop">
-          <div class="pp">
-            <img src="../../assets/articulos/cuy.jpeg" alt="Un Cuy">
+          <div class="pp" v-for="(ob,i) of carro" :key="i">
+            <img :src="ob.img[0]" alt="Un Cuy">
             <div class="produc">
               <div class="desc">
-                <p>Figura Cuy - Graduado</p>
-                <p>(Producto Nariñense decorado a mano)</p>
+                <p>{{ob.nombre}}</p>
+                <p>{{ ob.desc }} </p>
               </div>
               <div>
-                <button>eliminar</button>
-              </div>
-            </div>
-          </div>
-          <div class="pp">
-            <img src="../../assets/articulos/cuy.jpeg" alt="Un Cuy">
-            <div class="produc">
-              <div class="desc">
-                <p>Figura Cuy - Graduado</p>
-                <p>(Producto Nariñense decorado a mano)</p>
-              </div>
-              <div>
-                <button>eliminar</button>
+                <button @click="eliminar(i)"><img src="../../assets/delete.svg" alt="Delete"></button>
               </div>
             </div>
           </div>
         </div>
         <div class="rightbottom">
           <div class="valor">
-            <div class="one">
-              <h2>Precio</h2>
-              <h3>$ 50.000</h3>
-            </div>
             <div>
               <h2>Descuento de la oferta</h2>
               <h3>$ 0.0</h3>
@@ -71,7 +55,7 @@
             </div>
             <div>
               <h2>Subtotal</h2>
-              <h3>$ 60.000</h3>
+              <h3>$ {{total}}</h3>
             </div>
           </div>
         </div>
@@ -82,6 +66,109 @@
 
 <script lang="ts" setup>
 import NavBarUser from '../NavBar/NavBarUser.vue';
+import { useRegistroStore, type InProd } from '../../store/registro'
+import { getAuth } from 'firebase/auth'
+import { doc, updateDoc } from 'firebase/firestore'
+import { db } from '../../Firebase/Fire'
+import { type Ref, ref } from 'vue';
+import {useRouter} from 'vue-router'
+
+
+const router = useRouter()
+const user = getAuth().currentUser
+const reg = useRegistroStore()
+const total: Ref<number> = ref(0)
+const corre = reg.getRegistro(user?.email?.toString() || '')?.correo || ''
+
+let carro = reg.getRegistro(user?.email?.toString() || '')?.carro || []
+
+
+if (carro.length === 0) {
+  total.value = 0
+} else {
+  for (let i = 0; i < carro.length; i++) {
+    total.value += (parseInt(carro[i].precio) * carro[i].stock) 
+  }
+  total.value += 10000
+}
+
+const eliminar = async (i: number) => {
+
+  const prpr = reg.getRegistro(reg.getCorreo(carro[i].img[0]) || '')?.productos || []
+
+  let a = reg.getIndeximg(carro[i].img[0].toString() || '')
+
+  
+
+  const prod2 = {
+    nombre: carro[i].nombre.toString(), 
+    precio: carro[i].precio.toString(),
+    stock: (carro[i].stock + prpr[a].stock),
+    img: carro[i].img,
+    desc: carro[i].desc,
+    tipo: carro[i].tipo,
+  };
+
+  prpr.splice(a, 1, prod2);
+
+  await updateDoc(doc(db, "usuarios", reg.getCorreo(carro[i].img[0]) || ""), {
+    productos: prpr,
+  })
+    .then(() => {
+      console.log("documento actualizado");
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
+
+
+  carro.splice(i, 1)
+  try {
+    await updateDoc(doc(db, "usuarios", corre || ''), {
+      carro: carro
+    }).then(() => {
+      console.log("documento creado")
+    }).catch((error) => {
+      console.log("error al crear el documento")
+      return
+    });
+
+  } catch (error) {
+    console.log(error)
+  }
+
+
+  if (carro.length === 0) {
+    total.value = 0
+  } else {
+    for (let i = 0; i < carro.length; i++) {
+      total.value += (parseInt(carro[i].precio) * carro[i].stock) 
+    }
+    total.value += 10000
+  }
+}
+
+const fin = async () => {
+  carro = []
+  try {
+    await updateDoc(doc(db, "usuarios", corre || ''), {
+      carro: carro
+    }).then(() => {
+      console.log("documento creado")
+    }).catch((error) => {
+      console.log("error al crear el documento")
+      return
+    });
+
+  } catch (error) {
+    console.log(error)
+  }
+  alert("Compra realizada con exito")
+  router.push({ name: 'Home' })
+}
+
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -270,16 +357,20 @@ import NavBarUser from '../NavBar/NavBarUser.vue';
         }
 
         button {
-          width: 100px;
+          width: 35px;
           height: 30px;
-          margin-right: 20px;
+          margin-right: 10px;
           border: none;
           border-radius: 5px;
-          background-color: #000;
           color: #fff;
           font-size: 1rem;
           font-weight: 500;
           cursor: pointer;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
@@ -297,11 +388,8 @@ import NavBarUser from '../NavBar/NavBarUser.vue';
         flex-direction: left;
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 
-        .one {
-          margin-top: 20px;
-        }
-
         div {
+          margin-top: 45px;
           margin-left: 40px;
           margin-bottom: 25px;
 

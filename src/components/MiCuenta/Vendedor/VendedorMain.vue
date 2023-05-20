@@ -8,7 +8,7 @@
       <div class="center">
         <div class="pp" v-for="(o, i) of ob" :key="o.desc">
           <img :src="o.img[0]" alt="Un Cuy">
-          <div class="produc">
+          <div class="produc" :id="o.stock == 0 ? 'cero': ' '">
             <div class="desc">
               <p>{{ o.nombre }}</p>
               <p>{{ o.desc }}</p>
@@ -217,6 +217,9 @@ const eliminar = async (i: number) => {
         }
       }
     }
+  }
+  #cero {
+    background-color: red;
   }
 }
 </style>

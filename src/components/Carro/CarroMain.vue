@@ -71,6 +71,35 @@ const comp = () => {
 }
 
 const eliminar = async (i: number) => {
+
+  const prpr = reg.getRegistro(reg.getCorreo(carro[i].img[0]) || '')?.productos || []
+
+  let a = reg.getIndeximg(carro[i].img[0].toString() || '')
+
+  
+
+  const prod2 = {
+    nombre: carro[i].nombre.toString(), 
+    precio: carro[i].precio.toString(),
+    stock: (carro[i].stock + prpr[a].stock),
+    img: carro[i].img,
+    desc: carro[i].desc,
+    tipo: carro[i].tipo,
+  };
+
+  prpr.splice(a, 1, prod2);
+
+  await updateDoc(doc(db, "usuarios", reg.getCorreo(carro[i].img[0]) || ""), {
+    productos: prpr,
+  })
+    .then(() => {
+      console.log("documento actualizado");
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
+
+
   carro.splice(i, 1)
   try {
     await updateDoc(doc(db, "usuarios", corre || ''), {
@@ -85,6 +114,7 @@ const eliminar = async (i: number) => {
   } catch (error) {
     console.log(error)
   }
+
 
   if (carro.length === 0) {
     total.value = 0
@@ -234,7 +264,7 @@ if (carro.length === 0) {
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 
         div {
-          margin-top: 30px;
+          margin-top: 50px;
           margin-left: 40px;
           margin-bottom: 25px;
 
