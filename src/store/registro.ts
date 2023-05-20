@@ -29,6 +29,7 @@ interface RegistroState {
   telefono: string;
   direccion: string;
   productos: Array<InProd>;
+  carro: Array<InProd>;
   uso: boolean;
 }
 
@@ -42,6 +43,16 @@ export const useRegistroStore = defineStore("registro", {
         telefono: "1234567890",
         direccion: "Calle 123",
         productos: [
+          {
+            nombre: "Producto 1",
+            precio: "100",
+            stock: 10,
+            img: [" "],
+            desc: "Descripcion del producto 2",
+            tipo: "Barro",
+          },
+        ],
+        carro: [
           {
             nombre: "Producto 1",
             precio: "100",
@@ -85,6 +96,36 @@ export const useRegistroStore = defineStore("registro", {
         console.log(this.datos[i]);
       }
     },
+    getCorreo(img: string) {
+      for (let i = 0; i < this.datos.length; i++) {
+        if (this.datos[i].productos == undefined) {
+          continue;
+        }
+        for (let j = 0; j < this.datos[i].productos.length; j++) {
+          for (let k = 0; k < this.datos[i].productos[j].img.length; k++) {
+            if (this.datos[i].productos[j].img[k] == img) {
+              return this.datos[i].correo;
+            }
+          }
+        }
+      }
+    },
+    getIndeximg(img: string): number {
+      let a = 0;
+      for (let i = 0; i < this.datos.length; i++) {
+        if (this.datos[i].productos == undefined) {
+          continue;
+        }
+        for (let j = 0; j < this.datos[i].productos.length; j++) {
+          for (let k = 0; k < this.datos[i].productos[j].img.length; k++) {
+            if (this.datos[i].productos[j].img[k] == img) {
+              a = k;
+            }
+          }
+        }
+      }
+      return a;
+    },
     async setAll() {
       try {
         const q = query(collection(db, "usuarios"), where("uso", "==", true));
@@ -98,6 +139,7 @@ export const useRegistroStore = defineStore("registro", {
             telefono: doc.data().telefono,
             direccion: doc.data().direccion,
             productos: doc.data().productos,
+            carro: doc.data().carro,
             uso: doc.data().uso,
           };
           this.addRegistro(reg);

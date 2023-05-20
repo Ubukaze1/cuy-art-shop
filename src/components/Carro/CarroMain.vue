@@ -2,27 +2,15 @@
   <main class="main">
     <div class="left">
       <div class="center">
-        <div class="pp">
-          <img src="../../assets/articulos/cuy.jpeg" alt="Un Cuy">
+        <div class="pp" v-for="(ob, i) of carro" :key="i">
+          <img :src="ob.img[0]" alt="Un Cuy">
           <div class="produc">
             <div class="desc">
-              <p>Figura Cuy - Graduado</p>
-              <p>(Producto Nariñense decorado a mano)</p>
+              <p>{{ ob.nombre }}</p>
+              <p>{{ ob.desc }}</p>
             </div>
             <div>
-              <button>eliminar</button>
-            </div>
-          </div>
-        </div>
-        <div class="pp">
-          <img src="../../assets/articulos/cuy.jpeg" alt="Un Cuy">
-          <div class="produc">
-            <div class="desc">
-              <p>Figura Cuy - Graduado</p>
-              <p>(Producto Nariñense decorado a mano)</p>
-            </div>
-            <div>
-              <button>eliminar</button>
+              <button @click="eliminar(i)"><img src="../../assets/delete.svg" alt="Delete"></button>
             </div>
           </div>
         </div>
@@ -36,10 +24,6 @@
         </div>
         <div class="valor">
           <div>
-            <h2>Precio</h2>
-            <h3>$ 50.000</h3>
-          </div>
-          <div>
             <h2>Descuento de la oferta</h2>
             <h3>$ 0.0</h3>
           </div>
@@ -49,10 +33,10 @@
           </div>
           <div>
             <h2>Subtotal</h2>
-            <h3>$ 60.000</h3>
+            <h3>$ {{ total }}</h3>
           </div>
           <div class="bt">
-            <button class="bt-comp">Comprar</button>
+            <button class="bt-comp" @click="comp">Comprar</button>
           </div>
         </div>
       </div>
@@ -61,6 +45,66 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router'
+import { updateDoc, doc } from 'firebase/firestore'
+import { db } from '../../Firebase/Fire'
+import { getAuth } from 'firebase/auth'
+import { useRegistroStore, type InProd } from '../../store/registro'
+import { type Ref, ref } from 'vue'
+import { parse } from 'path'
+
+
+const user = getAuth().currentUser
+const reg = useRegistroStore()
+
+let total: Ref<number> = ref(0)
+
+
+const carro = reg.getRegistro(user?.email?.toString() || '')?.carro || []
+
+const router = useRouter()
+
+const corre = reg.getRegistro(user?.email?.toString() || '')?.correo || ''
+
+const comp = () => {
+  router.push({ name: 'Compra' })
+}
+
+const eliminar = async (i: number) => {
+  carro.splice(i, 1)
+  try {
+    await updateDoc(doc(db, "usuarios", corre || ''), {
+      carro: carro
+    }).then(() => {
+      console.log("documento creado")
+    }).catch((error) => {
+      console.log("error al crear el documento")
+      return
+    });
+
+  } catch (error) {
+    console.log(error)
+  }
+
+  if (carro.length === 0) {
+    total.value = 0
+  } else {
+    for (let i = 0; i < carro.length; i++) {
+      total.value += (parseInt(carro[i].precio) * carro[i].stock) 
+    }
+    total.value += 10000
+  }
+
+}
+if (carro.length === 0) {
+  total.value = 0
+} else {
+  for (let i = 0; i < carro.length; i++) {
+    total.value += (parseInt(carro[i].precio) * carro[i].stock) 
+  }
+  total.value += 10000
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -123,16 +167,20 @@
         }
 
         button {
-          width: 100px;
+          width: 35px;
           height: 30px;
-          margin-right: 20px;
+          margin-right: 10px;
           border: none;
           border-radius: 5px;
-          background-color: #000;
           color: #fff;
           font-size: 1rem;
           font-weight: 500;
           cursor: pointer;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }

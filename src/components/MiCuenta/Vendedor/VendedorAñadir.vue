@@ -137,6 +137,9 @@ const añadir = async () => {
   }).catch((error) => {
     console.error("Error adding document: ", error);
   });
+
+  router.push({ name: "Vendedor" })
+
 };
 </script>
 

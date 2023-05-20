@@ -1,7 +1,7 @@
 <template>
   <header class="head">
     <div class="lefthead">
-      <button>
+      <button @click="home">
         <img src="../../assets/Logo-removebg-preview.png" alt="Persona">
       </button>
     </div>
@@ -58,6 +58,10 @@ const login = () => {
     router.push("/login");
   }
 };
+
+const home = () => {
+  router.push({name: 'Home'})
+}
 
 const carro = () => {
   router.push({name: 'Carrito'})

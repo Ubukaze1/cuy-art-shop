@@ -43,7 +43,7 @@
     </div>
     <div class="mainright">
       <div class="targetas">
-        <div class="targeta" v-for="(ob, i) of filtro" :key="i">
+        <div class="targeta" v-for="(ob, i) of filtro" :key="i" @click="prod(i)">
           <img :src="ob.img[0]" alt="Primer Articulo">
           <div class="linea"></div>
           <h2>{{ ob.nombre }}</h2>
@@ -61,6 +61,7 @@
 <script lang="ts" setup>
 import { ref, type Ref, onUnmounted, watch } from 'vue'
 import { useRegistroStore, type InProd } from '../../store/registro'
+import router from '@/router';
 
 const reg = useRegistroStore()
 const num: Ref<number> = ref(20000)
@@ -73,12 +74,19 @@ let productos: Array<InProd> = [];
 let filtro: Array<InProd> = [];
 
 for (let i = 0; i < reg.datos.length; i++) {
+  if (reg.datos[i].productos == undefined) {
+    continue;
+  }
   for (let j = 0; j < reg.datos[i].productos.length; j++) {
     productos.push(reg.datos[i].productos[j]);
     filtro.push(reg.datos[i].productos[j]);
   }
 }
 console.log(productos)
+
+const prod = (i:number) => {
+  router.push({ name: "Producto", params: { id: i } })
+}
 
 onUnmounted(async () => {
   reg.clearAll()
@@ -118,7 +126,7 @@ watch(acuarela, (newval, oldval) => {
 })
 
 watch(num, (newval, oldval) => {
-  filtro = productos.filter((ob) => parseInt(ob.precio) <= newval);
+  filtro = productos.filter((ob) => parseInt(ob.precio) >= newval);
   console.log(newval)
   if (newval == 20000) {
     filtro = productos
@@ -348,6 +356,7 @@ watch(num, (newval, oldval) => {
         display: flex;
         flex-direction: column;
         align-items: center;
+        cursor: pointer;
 
         img {
           margin-top: 20px;

@@ -4,47 +4,44 @@
     <main class="main">
       <div class="left">
         <div class="center">
-          <img src="../../assets/articulos/cuy.jpeg" alt="Un Cuy">
+          <img :src="imgg" alt="Un Cuy">
           <div class="linea"></div>
           <div class="info">
             <h2>Descripcion</h2>
-            <p>Cerdito de Ceramica blanco con salpicadura de colores.</p>
-            <p>Producto tolimence</p>
-            <p>Perfecto regalo para tu pareja o amig@</p>
-            <p>Entrègale a esa persona un recuerdo del tolima y de nuestros artesanos, pequeño, lindo y con carisma</p>
+            <p>{{ desc }}</p>
           </div>
         </div>
       </div>
       <div class="right">
         <div class="rightop">
           <div class="top">
-            <h1>Cerdito personalizado de ceramica</h1>
+            <h1> {{ nombre }} </h1>
             <div class="linea"></div>
-            <h2>$ 25.000</h2>
+            <h2>$ {{ precio }} </h2>
             <div class="sto">
               <h2>Stock</h2>
-              <input type="number" name="stock" id="stock">
+              <input type="number" name="stock" id="stock" v-model="st">
             </div>
             <div class="masmen">
-              <button>+</button>
-              <button>-</button>
+              <button @click="man">+</button>
+              <button @click="men">-</button>
             </div>
             <div class="agrecom">
-              <button class="bt-add">Agregar</button>
+              <button class="bt-add" @click="add">Agregar</button>
               <button class="bt-comp">Comprar</button>
             </div>
           </div>
           <div class="valor">
-            <div class="targeta">
-              <img src="../../assets/articulos/09757-BIG.jpg" alt="Primer Articulo">
+            <div class="targeta" v-for="(ob, i) of productos" :key="i" @click="id = i">
+              <img :src="ob.img[0]" alt="Primer Articulo">
               <div class="price">
                 <div class="ppp">
-                  <h2>Vandola de Cafe</h2>
+                  <h2> {{ ob.nombre }} </h2>
                   <div>
-                    <p>$ 45.000</p>
+                    <p>$ {{ ob.precio }} </p>
                     <div class="lineap"></div>
                   </div>
-                  <p>Ha, Pero que lindo</p>
+                  <p> {{ ob.desc }} </p>
                 </div>
               </div>
             </div>
@@ -56,7 +53,133 @@
 </template>
 
 <script lang="ts" setup>
+import { useRegistroStore, type InProd } from '../../store/registro'
 import NavBar from '../NavBar/NavBar.vue';
+import { doc, updateDoc } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
+import { db } from '../../Firebase/Fire'
+import { useRoute, useRouter } from 'vue-router'
+import { ref, type Ref } from 'vue'
+
+
+const user = getAuth().currentUser
+const reg = useRegistroStore()
+const routerrr = useRoute()
+const routerr = useRouter()
+let productos: Array<InProd> = [];
+let id = parseInt(routerrr.params.id[0]) || 0
+let correo = reg.getRegistro(user?.email?.toString() || '')?.correo || ''
+const desc: Ref<string> = ref('')
+const precio: Ref<string> = ref('')
+const stock: Ref<number> = ref(1)
+const imgg: Ref<string> = ref('')
+const iimmgg: Ref<Array<string>> = ref([])
+const nombre: Ref<string> = ref('')
+const tipo: Ref<string> = ref('')
+let st: Ref<number> = ref(1)
+const carro = reg.getRegistro(user?.email?.toString() || '')?.carro || []
+
+for (let i = 0; i < reg.datos.length; i++) {
+  if (reg.datos[i].productos == undefined) {
+    continue;
+  }
+  for (let j = 0; j < reg.datos[i].productos.length; j++) {
+    productos.push(reg.datos[i].productos[j]);
+  }
+}
+
+const add = async () => {
+  const prod = {
+    nombre: nombre.value.toString(),
+    precio: precio.value.toString(),
+    stock: st.value,
+    img: iimmgg.value,
+    desc: desc.value.toString(),
+    tipo: tipo.value.toString(),
+  };
+
+  let stototal = stock.value - st.value
+
+  const prod2 = {
+    nombre: nombre.value.toString(),
+    precio: precio.value.toString(),
+    stock: (stock.value - st.value),
+    img: iimmgg.value,
+    desc: desc.value.toString(),
+    tipo: tipo.value.toString(),
+  };
+  console.log(prod)
+
+  console.log(carro)
+  carro.push(prod)
+
+  await updateDoc(doc(db, "usuarios", correo || ""), {
+    carro: carro,
+  }).then(() => {
+    console.log("documento actualizado");
+  }).catch((error) => {
+    console.error("Error adding document: ", error);
+  });
+
+  const prpr = reg.getRegistro(reg.getCorreo(prod.img[0]) || '')?.productos || []
+
+  let a = reg.getIndeximg(prod.img[0] || '') || 0
+
+  prpr.splice(a, 1, prod2);
+
+  await updateDoc(doc(db, "usuarios", reg.getCorreo(prod.img[0]) || ""), {
+    productos: prpr,
+  })
+    .then(() => {
+      console.log("documento actualizado");
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
+  
+  routerr.push({ name: 'Carro' })
+}
+
+function getIndeximg(img: string):number {
+  let a = 0;
+  for (let i = 0; i < reg.datos.length; i++) {
+    for (let j = 0; j < reg.datos[i].productos.length; j++) {
+      for (let k = 0; k < reg.datos[i].productos[j].img.length; k++) {
+        if (reg.datos[i].productos[j].img[k] == img) {
+          a = k;
+        }
+      }
+    }
+  }
+  return a;
+}
+
+
+
+
+let producto: InProd = productos[id]
+
+desc.value = producto.desc
+precio.value = producto.precio
+stock.value = producto.stock
+imgg.value = producto.img[0]
+iimmgg.value = producto.img
+nombre.value = producto.nombre
+
+console.log(producto)
+
+const men = () => {
+  if (st.value > 0) {
+    st.value--
+  }
+}
+
+const man = () => {
+  if (st.value < stock.value) {
+    st.value++
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -151,7 +274,7 @@ import NavBar from '../NavBar/NavBar.vue';
         background-color: white;
         width: 100%;
         height: 30%;
-        
+
         padding: 20px;
 
         h1 {
@@ -242,7 +365,7 @@ import NavBar from '../NavBar/NavBar.vue';
       .valor {
         margin-top: 70px;
         width: 110%;
-        height: 50%;
+        height: 41%;
         background-color: #d9d2cf;
         display: flex;
         flex-direction: column;
@@ -256,6 +379,7 @@ import NavBar from '../NavBar/NavBar.vue';
           justify-content: center;
           align-items: center;
           width: 75%;
+          cursor: pointer;
 
           img {
             width: 50%;

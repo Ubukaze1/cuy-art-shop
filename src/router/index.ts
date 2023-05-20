@@ -74,7 +74,7 @@ const router = createRouter({
       component: CarroPage,
     },
     {
-      path: '/producto',
+      path: '/producto/:id',
       name: 'Producto',
       component: PaginaProducto,
     },
