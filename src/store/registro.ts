@@ -114,12 +114,13 @@ export const useRegistroStore = defineStore("registro", {
       let a = 0;
       for (let i = 0; i < this.datos.length; i++) {
         if (this.datos[i].productos == undefined) {
+          console.log("undefined");
           continue;
         }
         for (let j = 0; j < this.datos[i].productos.length; j++) {
           for (let k = 0; k < this.datos[i].productos[j].img.length; k++) {
-            if (this.datos[i].productos[j].img[k] == img) {
-              a = k;
+            if (this.datos[i].productos[j].img[k].toLocaleLowerCase().toString() == img.toLocaleLowerCase().toString()) {
+              return j;
             }
           }
         }

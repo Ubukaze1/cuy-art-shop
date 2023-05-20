@@ -123,7 +123,8 @@ const add = async () => {
 
   const prpr = reg.getRegistro(reg.getCorreo(prod.img[0]) || '')?.productos || []
 
-  let a = reg.getIndeximg(prod.img[0] || '') || 0
+  let a = reg.getIndeximg(prod.img[0].toString() || '')
+
 
   prpr.splice(a, 1, prod2);
 
@@ -137,7 +138,7 @@ const add = async () => {
       console.error("Error adding document: ", error);
     });
   
-  routerr.push({ name: 'Carro' })
+  routerr.push({ name: 'Compra' })
 }
 
 function getIndeximg(img: string):number {
