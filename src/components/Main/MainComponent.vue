@@ -7,19 +7,19 @@
           <div class="linea"></div>
           <form>
             <div>
-              <input type="checkbox" name="tipo1" id="tipo1" v-model="ceramica" >
+              <input type="checkbox" name="tipo1" id="tipo1" v-model="ceramica">
               <label for="tipo1">Ceràmica</label>
             </div>
             <div>
-              <input type="checkbox" name="tipo2" id="tipo2" v-model="barro" >
+              <input type="checkbox" name="tipo2" id="tipo2" v-model="barro">
               <label for="tipo2">Barro</label>
             </div>
             <div>
-              <input type="checkbox" name="tipo3" id="tipo3" v-model="tela" >
+              <input type="checkbox" name="tipo3" id="tipo3" v-model="tela">
               <label for="tipo3">Tela</label>
             </div>
             <div>
-              <input type="checkbox" name="tipo4" id="tipo4" v-model="acuarela" >
+              <input type="checkbox" name="tipo4" id="tipo4" v-model="acuarela">
               <label for="tipo4">Acuarela</label>
             </div>
           </form>
@@ -87,7 +87,7 @@ for (let i = 0; i < reg.datos.length; i++) {
 }
 console.log(productos)
 
-const prod = (i:number) => {
+const prod = (i: number) => {
   router.push({ name: "Producto", params: { id: i } })
 }
 
@@ -99,33 +99,213 @@ onUnmounted(async () => {
 watch(ceramica, (newval, oldval) => {
   if (newval) {
     filtro = productos.filter((ob) => ob.tipo == "Ceràmica");
+
+    if (barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro");
+    }
+    if (tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Tela");
+    }
+    if (acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Acuarela");
+    }
+    if (barro.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Tela");
+    }
+    if (barro.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Acuarela");
+    }
+    if (tela.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (barro.value && tela.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    console.log("Verdad")
   } else {
     filtro = productos
+
+    if (barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro");
+    }
+    if (tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Tela");
+    }
+    if (acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Acuarela");
+    }
+    if (barro.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Tela");
+    }
+    if (barro.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Acuarela");
+    }
+    if (tela.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (barro.value && tela.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
   }
 })
 
 watch(barro, (newval, oldval) => {
   if (newval) {
     filtro = productos.filter((ob) => ob.tipo == "Barro");
+    if (ceramica.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Ceràmica");
+    }
+    if (tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Tela");
+    }
+    if (acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Ceràmica" || ob.tipo == "Tela");
+    }
+    if (ceramica.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Ceràmica" || ob.tipo == "Acuarela");
+    }
+    if (tela.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && tela.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
   } else {
     filtro = productos
+
+    if (ceramica.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica");
+    }
+    if (tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Tela");
+    }
+    if (acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Tela");
+    }
+    if (ceramica.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Acuarela");
+    }
+    if (tela.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && tela.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
   }
+
 })
 
 watch(tela, (newval, oldval) => {
+
   if (newval) {
     filtro = productos.filter((ob) => ob.tipo == "Tela");
+    if (ceramica.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Tela");
+    }
+    if (barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Tela");
+    }
+    if (acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Tela");
+    }
+    if (ceramica.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (barro.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && barro.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
   } else {
     filtro = productos
+
+    if (ceramica.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica");
+    }
+    if (barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro");
+    }
+    if (acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Tela");
+    }
+    if (ceramica.value && barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro");
+    }
+    if (ceramica.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Acuarela");
+    }
+    if (barro.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && barro.value && acuarela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Acuarela");
+    }
   }
 })
 
 watch(acuarela, (newval, oldval) => {
   if (newval) {
     filtro = productos.filter((ob) => ob.tipo == "Acuarela");
+
+    if (ceramica.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Acuarela");
+    }
+    if (barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Acuarela");
+    }
+    if (tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (barro.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
+    if (ceramica.value && barro.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Tela" || ob.tipo == "Acuarela");
+    }
   } else {
     filtro = productos
+
+    if (ceramica.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica");
+    }
+    if (barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro");
+    }
+    if (tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Tela");
+    }
+    if (ceramica.value && barro.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro");
+    }
+    if (ceramica.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Tela");
+    }
+    if (barro.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Barro" || ob.tipo == "Tela");
+    }
+    if (ceramica.value && barro.value && tela.value) {
+      filtro = productos.filter((ob) => ob.tipo == "Ceràmica" || ob.tipo == "Barro" || ob.tipo == "Tela");
+    }
+
   }
+
+
 })
 
 watch(num, (newval, oldval) => {
